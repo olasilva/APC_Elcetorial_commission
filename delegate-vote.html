@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENTINEL | Delegate Voting Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --deep-green: #006647;
+            --gold: #d4af37;
+            --midnight: #020c17;
+            --intel-blue: #0f283f;
+            --text-primary: #e6edf3;
+            --text-secondary: #9bb7d4;
+            --accent-green: #00b87a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--midnight);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 2rem;
+            background: rgba(2, 13, 26, 0.95);
+            border-bottom: 1px solid rgba(0, 180, 120, 0.3);
+            backdrop-filter: blur(20px);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .apc-emblem {
+            background: linear-gradient(135deg, #0a4b33, #043322);
+            padding: 0.4rem 0.8rem;
+            border-radius: 2rem;
+            border: 1px solid var(--gold);
+            color: #f5e7c6;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .sentinel-logo {
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+        }
+
+        .sentinel-logo span {
+            color: var(--accent-green);
+        }
+
+        .main-layout {
+            display: flex;
+            min-height: calc(100vh - 64px);
+        }
+
+        .sidebar {
+            width: 260px;
+            background: rgba(5, 16, 30, 0.9);
+            border-right: 1px solid rgba(0, 180, 120, 0.2);
+            padding: 1.5rem 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            border-radius: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(0, 184, 122, 0.15);
+            color: var(--accent-green);
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .voting-header {
+            background: linear-gradient(135deg, #006647, #003d2b);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .candidates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .candidate-card {
+            background: rgba(8, 20, 32, 0.8);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            border: 2px solid rgba(0, 180, 120, 0.2);
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+            position: relative;
+        }
+
+        .candidate-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 184, 122, 0.3);
+        }
+
+        .candidate-card.selected {
+            border-color: var(--gold);
+            background: rgba(0, 184, 122, 0.1);
+        }
+
+        .candidate-card.voted {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .candidate-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #1e3b51;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--gold);
+            font-size: 2rem;
+        }
+
+        .vote-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .selected .vote-indicator {
+            background: var(--accent-green);
+            color: white;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+
+        .btn-primary { background: var(--accent-green); color: white; }
+        .btn-primary:hover { background: #00d48f; }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-large {
+            padding: 1.5rem 3rem;
+            font-size: 1.2rem;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .confirmation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: rgba(8, 20, 32, 0.95);
+            border-radius: 2rem;
+            padding: 2rem;
+            max-width: 500px;
+            border: 1px solid var(--gold);
+            text-align: center;
+        }
+
+        .success-animation {
+            font-size: 4rem;
+            color: var(--accent-green);
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-brand">
+            <div class="apc-emblem">
+    <img src="assets/apc2.png" alt="APC Logo" class="apc-logo-img">
+</div>
+            <div class="sentinel-logo">SENTINEL<span>.</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:1rem;">
+            <span id="liveClock" style="font-weight:600;"></span>
+            <span style="background: var(--accent-green); padding:0.3rem 1rem; border-radius:2rem; font-weight:600;">
+                <i class="fas fa-shield-alt"></i> SECURE VOTING
+            </span>
+        </div>
+    </nav>
+
+    <div class="main-layout">
+        <aside class="sidebar">
+            <button class="nav-item" onclick="window.location.href='dashboard.html'">
+                <i class="fas fa-th-large"></i> Command Center
+            </button>
+            <button class="nav-item" onclick="window.location.href='primaries.html'">
+                <i class="fas fa-vote-yea"></i> Primary Elections
+            </button>
+            <button class="nav-item" onclick="window.location.href='accreditation.html'">
+                <i class="fas fa-id-card"></i> Accreditation
+            </button>
+            <button class="nav-item active">
+                <i class="fas fa-check-circle"></i> Voting Portal
+            </button>
+            <button class="nav-item" onclick="window.location.href='collation.html'">
+                <i class="fas fa-calculator"></i> Collation Center
+            </button>
+            <button class="nav-item" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </aside>
+
+        <main class="content-area" id="votingArea">
+            <div class="voting-header">
+                <div>
+                    <h2><i class="fas fa-vote-yea" style="color: var(--gold);"></i> CAST YOUR VOTE</h2>
+                    <p style="color: var(--text-secondary); margin-top:0.3rem;">Senate Primary - Kano Central</p>
+                </div>
+                <div style="background: rgba(0,0,0,0.3); padding:1rem; border-radius:1rem; text-align:center;">
+                    <small style="color: var(--text-secondary);">ACCREDITED DELEGATE</small><br>
+                    <strong style="color: var(--accent-green);">✔ Verified</strong>
+                </div>
+            </div>
+
+            <div class="candidates-grid" id="candidatesGrid">
+                <!-- Populated by JavaScript -->
+            </div>
+
+            <button class="btn btn-primary btn-large" id="submitVoteBtn" disabled onclick="submitVote()">
+                <i class="fas fa-check-circle"></i> SUBMIT YOUR VOTE
+            </button>
+        </main>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="confirmation-modal" id="confirmModal">
+        <div class="modal-content">
+            <div class="success-animation">🗳️</div>
+            <h2 style="color: var(--gold); margin:1rem 0;">VOTE RECORDED!</h2>
+            <p style="margin-bottom:1rem;">Your vote has been securely transmitted to the APC server.</p>
+            <div style="background: rgba(0,0,0,0.3); padding:1rem; border-radius:1rem; margin-bottom:1rem;">
+                <p><strong>Transaction ID:</strong> APC-2026-8472-KC</p>
+                <p><strong>Timestamp:</strong> <span id="voteTimestamp"></span></p>
+            </div>
+            <button class="btn btn-primary" onclick="window.location.href='primaries.html'">
+                RETURN TO ELECTIONS
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function handleLogout() {
+            sessionStorage.clear();
+            window.location.href = 'auth.html';
+        }
+
+        const candidates = [
+            { id: 1, name: 'Hon. Musa Ibrahim', party: 'APC', bio: 'Former Commissioner, Lawyer', image: '👨‍💼' },
+            { id: 2, name: 'Dr. Amina Yusuf', party: 'APC', bio: 'Medical Doctor, Philanthropist', image: '👩‍⚕️' },
+            { id: 3, name: 'Alhaji Sani Bello', party: 'APC', bio: 'Businessman, Community Leader', image: '👨‍💼' },
+            { id: 4, name: 'Barr. Fatima Usman', party: 'APC', bio: 'Legal Practitioner, Activist', image: '👩‍💼' }
+        ];
+
+        let selectedCandidate = null;
+
+        function renderCandidates() {
+            const grid = document.getElementById('candidatesGrid');
+            grid.innerHTML = candidates.map(candidate => `
+                <div class="candidate-card" id="candidate-${candidate.id}" onclick="selectCandidate(${candidate.id})">
+                    <div class="vote-indicator">
+                        <i class="fas fa-check" style="display:none;"></i>
+                    </div>
+                    <div class="candidate-avatar">${candidate.image}</div>
+                    <h3 style="margin-bottom:0.5rem;">${candidate.name}</h3>
+                    <p style="color: var(--text-secondary); font-size:0.9rem;">${candidate.bio}</p>
+                    <div style="margin-top:1rem;">
+                        <span style="background: rgba(0,184,122,0.2); padding:0.3rem 1rem; border-radius:2rem; font-size:0.8rem;">
+                            ${candidate.party}
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectCandidate(id) {
+            if (selectedCandidate === id) {
+                // Deselect
+                selectedCandidate = null;
+                document.getElementById('submitVoteBtn').disabled = true;
+            } else {
+                // Select
+                selectedCandidate = id;
+                document.getElementById('submitVoteBtn').disabled = false;
+            }
+
+            // Update UI
+            document.querySelectorAll('.candidate-card').forEach(card => card.classList.remove('selected'));
+            const selectedCard = document.getElementById(`candidate-${id}`);
+            if (selectedCard && selectedCandidate === id) {
+                selectedCard.classList.add('selected');
+                selectedCard.querySelector('.vote-indicator i').style.display = 'block';
+            }
+        }
+
+        function submitVote() {
+            if (!selectedCandidate) return;
+
+            const candidate = candidates.find(c => c.id === selectedCandidate);
+            
+            // Store vote
+            sessionStorage.setItem('vote_cast', 'true');
+            sessionStorage.setItem('voted_candidate', candidate.name);
+            sessionStorage.setItem('vote_time', new Date().toISOString());
+
+            // Show confirmation
+            document.getElementById('voteTimestamp').textContent = 
+                new Date().toLocaleString('en-NG', { timeZone: 'Africa/Lagos' });
+            document.getElementById('confirmModal').style.display = 'flex';
+
+            // Disable all cards
+            document.querySelectorAll('.candidate-card').forEach(card => {
+                card.classList.add('voted');
+            });
+            document.getElementById('submitVoteBtn').disabled = true;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check accreditation
+            if (!sessionStorage.getItem('delegate_accredited')) {
+                alert('⚠️ You must be accredited first!');
+                window.location.href = 'accreditation.html';
+                return;
+            }
+
+            // Check if already voted
+            if (sessionStorage.getItem('vote_cast')) {
+                document.getElementById('votingArea').innerHTML = `
+                    <div style="text-align:center; padding:3rem;">
+                        <div style="font-size:5rem; margin-bottom:1rem;">✅</div>
+                        <h2 style="color: var(--accent-green); margin-bottom:1rem;">YOU HAVE ALREADY VOTED</h2>
+                        <p style="color: var(--text-secondary); margin-bottom:1rem;">
+                            Your vote for <strong>${sessionStorage.getItem('voted_candidate')}</strong> has been recorded.
+                        </p>
+                        <button class="btn btn-primary" onclick="window.location.href='primaries.html'">
+                            RETURN TO ELECTIONS
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            renderCandidates();
+
+            setInterval(() => {
+                document.getElementById('liveClock').textContent = 
+                    new Date().toLocaleTimeString('en-NG', { timeZone: 'Africa/Lagos', hour12: false });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

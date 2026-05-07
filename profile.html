@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENTINEL | Candidate Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --deep-green: #006647;
+            --gold: #d4af37;
+            --midnight: #020c17;
+            --intel-blue: #0f283f;
+            --text-primary: #e6edf3;
+            --text-secondary: #9bb7d4;
+            --accent-green: #00b87a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--midnight);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 2rem;
+            background: rgba(2, 13, 26, 0.95);
+            border-bottom: 1px solid rgba(0, 180, 120, 0.3);
+            backdrop-filter: blur(20px);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .apc-emblem {
+            background: linear-gradient(135deg, #0a4b33, #043322);
+            padding: 0.4rem 0.8rem;
+            border-radius: 2rem;
+            border: 1px solid var(--gold);
+            color: #f5e7c6;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .sentinel-logo {
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+        }
+
+        .sentinel-logo span {
+            color: var(--accent-green);
+        }
+
+        .main-layout {
+            display: flex;
+            min-height: calc(100vh - 64px);
+        }
+
+        .sidebar {
+            width: 260px;
+            background: rgba(5, 16, 30, 0.9);
+            border-right: 1px solid rgba(0, 180, 120, 0.2);
+            padding: 1.5rem 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            border-radius: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(0, 184, 122, 0.15);
+            color: var(--accent-green);
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .profile-header {
+            background: rgba(8, 20, 32, 0.8);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            border: 1px solid rgba(0, 180, 120, 0.3);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #1e3b51;
+            border: 4px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .info-card {
+            background: rgba(8, 20, 32, 0.8);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(0, 180, 120, 0.2);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .info-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .verification-badge {
+            background: rgba(0, 168, 107, 0.2);
+            color: #00e08a;
+            padding: 0.3rem 1rem;
+            border-radius: 1rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-brand">
+            <div class="apc-emblem">
+    <img src="assets/apc2.png" alt="APC Logo" class="apc-logo-img">
+</div>
+            <div class="sentinel-logo">SENTINEL<span>.</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:1rem;">
+            <span id="liveClock"></span>
+            <button style="background: var(--accent-green); border:none; padding:0.5rem 1.2rem; border-radius:0.8rem; color:white; font-weight:600; cursor:pointer;" onclick="window.location.href='dashboard.html'">
+                <i class="fas fa-th-large"></i> Dashboard
+            </button>
+        </div>
+    </nav>
+
+    <div class="main-layout">
+        <aside class="sidebar">
+            <button class="nav-item" onclick="window.location.href='dashboard.html'">
+                <i class="fas fa-th-large"></i> Command Center
+            </button>
+            <button class="nav-item" onclick="window.location.href='candidates.html'">
+                <i class="fas fa-database"></i> Winner Registry
+            </button>
+            <button class="nav-item" onclick="window.location.href='analytics.html'">
+                <i class="fas fa-chart-pie"></i> Analytics
+            </button>
+            <button class="nav-item active">
+                <i class="fas fa-user"></i> Profiles
+            </button>
+            <button class="nav-item" onclick="window.location.href='admin.html'">
+                <i class="fas fa-cog"></i> Admin
+            </button>
+            <button class="nav-item" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </aside>
+
+        <main class="content-area" id="profileContent">
+            <!-- Profile content loaded dynamically -->
+        </main>
+    </div>
+
+    <script>
+        const candidateProfiles = {
+            'Hon. Musa Ibrahim': {
+                name: 'Hon. Musa Ibrahim',
+                office: 'Senate',
+                state: 'Kano',
+                lga: 'Nassarawa',
+                constituency: 'Kano Central',
+                gender: 'Male',
+                occupation: 'Lawyer',
+                votes: 1248,
+                date: 'May 7, 2026',
+                venue: 'APC State Secretariat, Kano',
+                returningOfficer: 'Barr. Ahmad Tijjani',
+                status: 'Emerged Winner',
+                verification: 'Verified'
+            }
+        };
+
+        function handleLogout() {
+            sessionStorage.clear();
+            window.location.href = 'auth.html';
+        }
+
+        function loadProfile() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const candidateName = urlParams.get('candidate') || 'Hon. Musa Ibrahim';
+            const profile = candidateProfiles[candidateName] || {
+                name: candidateName,
+                office: 'Senate',
+                state: 'Kano',
+                lga: 'Nassarawa',
+                constituency: 'Kano Central',
+                gender: 'Male',
+                occupation: 'Lawyer',
+                votes: 1248,
+                date: 'May 7, 2026',
+                venue: 'APC State Secretariat',
+                returningOfficer: 'Barr. Ahmad Tijjani',
+                status: 'Emerged Winner',
+                verification: 'Verified'
+            };
+
+            document.getElementById('profileContent').innerHTML = `
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <h1 style="font-size:2rem; margin-bottom:0.5rem;">${profile.name}</h1>
+                        <span class="verification-badge"><i class="fas fa-check-circle"></i> ${profile.verification}</span>
+                        <p style="color: var(--gold); margin-top:0.5rem; font-size:1.1rem;">${profile.office} • ${profile.state}</p>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3 style="color: var(--gold); margin-bottom:1rem;">📋 Basic Information</h3>
+                        <div class="info-row"><span class="info-label">Full Name</span><span>${profile.name}</span></div>
+                        <div class="info-row"><span class="info-label">Gender</span><span>${profile.gender}</span></div>
+                        <div class="info-row"><span class="info-label">State</span><span>${profile.state}</span></div>
+                        <div class="info-row"><span class="info-label">LGA</span><span>${profile.lga}</span></div>
+                        <div class="info-row"><span class="info-label">Constituency</span><span>${profile.constituency}</span></div>
+                        <div class="info-row"><span class="info-label">Office</span><span>${profile.office}</span></div>
+                        <div class="info-row"><span class="info-label">Occupation</span><span>${profile.occupation}</span></div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3 style="color: var(--gold); margin-bottom:1rem;">🗳 Election Information</h3>
+                        <div class="info-row"><span class="info-label">Delegate Votes</span><span><strong>${profile.votes.toLocaleString()}</strong></span></div>
+                        <div class="info-row"><span class="info-label">Date Declared</span><span>${profile.date}</span></div>
+                        <div class="info-row"><span class="info-label">Venue</span><span>${profile.venue}</span></div>
+                        <div class="info-row"><span class="info-label">Returning Officer</span><span>${profile.returningOfficer}</span></div>
+                        <div class="info-row"><span class="info-label">Status</span><span class="verification-badge">${profile.status}</span></div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3 style="color: var(--gold); margin-bottom:1rem;">📄 Documents & Media</h3>
+                        <div style="display:flex; gap:1rem; margin-top:1rem;">
+                            <button style="background:var(--accent-green); border:none; padding:0.5rem 1rem; border-radius:0.5rem; color:white; cursor:pointer;">
+                                <i class="fas fa-file-pdf"></i> Result Sheet
+                            </button>
+                            <button style="background:var(--accent-green); border:none; padding:0.5rem 1rem; border-radius:0.5rem; color:white; cursor:pointer;">
+                                <i class="fas fa-image"></i> Photos
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3 style="color: var(--gold); margin-bottom:1rem;">⚖ Disputes & Appeals</h3>
+                        <div class="info-row"><span class="info-label">Petition Status</span><span>None</span></div>
+                        <div class="info-row"><span class="info-label">Court Action</span><span>None</span></div>
+                        <div class="info-row"><span class="info-label">Appeal Outcome</span><span>N/A</span></div>
+                        <div class="info-row"><span class="info-label">NWC Intervention</span><span>Not Required</span></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!sessionStorage.getItem('sentinel_auth')) {
+                window.location.href = 'auth.html';
+                return;
+            }
+            
+            loadProfile();
+            
+            setInterval(() => {
+                document.getElementById('liveClock').textContent = 
+                    new Date().toLocaleTimeString('en-NG', { timeZone: 'Africa/Lagos', hour12: false });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

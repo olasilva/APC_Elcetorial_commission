@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENTINEL | Admin Command</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --deep-green: #006647;
+            --gold: #d4af37;
+            --midnight: #020c17;
+            --intel-blue: #0f283f;
+            --text-primary: #e6edf3;
+            --text-secondary: #9bb7d4;
+            --accent-green: #00b87a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--midnight);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 2rem;
+            background: rgba(2, 13, 26, 0.95);
+            border-bottom: 1px solid rgba(0, 180, 120, 0.3);
+            backdrop-filter: blur(20px);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .apc-emblem {
+            background: linear-gradient(135deg, #0a4b33, #043322);
+            padding: 0.4rem 0.8rem;
+            border-radius: 2rem;
+            border: 1px solid var(--gold);
+            color: #f5e7c6;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .sentinel-logo {
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+        }
+
+        .sentinel-logo span {
+            color: var(--accent-green);
+        }
+
+        .main-layout {
+            display: flex;
+            min-height: calc(100vh - 64px);
+        }
+
+        .sidebar {
+            width: 260px;
+            background: rgba(5, 16, 30, 0.9);
+            border-right: 1px solid rgba(0, 180, 120, 0.2);
+            padding: 1.5rem 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            border-radius: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(0, 184, 122, 0.15);
+            color: var(--accent-green);
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .admin-card {
+            background: rgba(8, 20, 32, 0.8);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            border: 1px solid rgba(0, 180, 120, 0.2);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            background: rgba(15, 35, 55, 0.8);
+            border: 1px solid rgba(0, 180, 120, 0.25);
+            border-radius: 0.8rem;
+            padding: 0.8rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #00d48f;
+        }
+
+        .btn-danger {
+            background: #ff4444;
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--gold);
+            color: #020c17;
+        }
+
+        .audit-log {
+            background: rgba(0,0,0,0.3);
+            border-radius: 1rem;
+            padding: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+
+        .log-entry {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-brand">
+           <div class="apc-emblem">
+    <img src="assets/apc2.png" alt="APC Logo" class="apc-logo-img">
+</div>
+            <div class="sentinel-logo">SENTINEL<span>.</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:1rem;">
+            <span id="liveClock"></span>
+            <span style="background: var(--accent-green); padding:0.3rem 1rem; border-radius:2rem; font-weight:600; animation: pulse 2s infinite;">
+                <i class="fas fa-shield"></i> ADMIN MODE
+            </span>
+        </div>
+    </nav>
+
+    <div class="main-layout">
+        <aside class="sidebar">
+            <button class="nav-item" onclick="window.location.href='dashboard.html'">
+                <i class="fas fa-th-large"></i> Command Center
+            </button>
+            <button class="nav-item" onclick="window.location.href='candidates.html'">
+                <i class="fas fa-database"></i> Winner Registry
+            </button>
+            <button class="nav-item" onclick="window.location.href='analytics.html'">
+                <i class="fas fa-chart-pie"></i> Analytics
+            </button>
+            <button class="nav-item" onclick="window.location.href='profile.html'">
+                <i class="fas fa-user"></i> Profiles
+            </button>
+            <button class="nav-item active">
+                <i class="fas fa-cog"></i> Admin
+            </button>
+            <button class="nav-item" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </aside>
+
+        <main class="content-area">
+            <h2 style="margin-bottom:1.5rem; color: var(--gold);">
+                <i class="fas fa-crown"></i> ADMINISTRATIVE COMMAND CENTER
+            </h2>
+
+            <!-- Add Candidate Form -->
+            <div class="admin-card">
+                <h3 style="color: var(--accent-green); margin-bottom:1.5rem;">
+                    <i class="fas fa-user-plus"></i> ADD NEW WINNER
+                </h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input type="text" class="form-input" placeholder="Full name as per records">
+                    </div>
+                    <div class="form-group">
+                        <label>Office *</label>
+                        <select class="form-input">
+                            <option>Select Office</option>
+                            <option>Governor</option>
+                            <option>Senate</option>
+                            <option>House of Reps</option>
+                            <option>State Assembly</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>State *</label>
+                        <select class="form-input">
+                            <option>Select State</option>
+                            <option>Lagos</option><option>Kano</option><option>Kaduna</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Constituency</label>
+                        <input type="text" class="form-input" placeholder="Electoral zone">
+                    </div>
+                    <div class="form-group">
+                        <label>Delegate Votes *</label>
+                        <input type="number" class="form-input" placeholder="Number of votes">
+                    </div>
+                    <div class="form-group">
+                        <label>Date Declared</label>
+                        <input type="date" class="form-input">
+                    </div>
+                </div>
+                <div style="margin-top:1.5rem; display:flex; gap:1rem;">
+                    <button class="btn btn-primary"><i class="fas fa-save"></i> Add Candidate</button>
+                    <button class="btn btn-warning"><i class="fas fa-clock"></i> Save as Draft</button>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="admin-card">
+                <h3 style="color: var(--accent-green); margin-bottom:1.5rem;">
+                    <i class="fas fa-bolt"></i> QUICK ACTIONS
+                </h3>
+                <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                    <button class="btn btn-primary"><i class="fas fa-check"></i> Verify Candidate</button>
+                    <button class="btn btn-warning"><i class="fas fa-flag"></i> Flag Dispute</button>
+                    <button class="btn btn-primary"><i class="fas fa-upload"></i> Upload Results</button>
+                    <button class="btn btn-danger"><i class="fas fa-archive"></i> Archive Records</button>
+                </div>
+            </div>
+
+            <!-- Audit Logs -->
+            <div class="admin-card">
+                <h3 style="color: var(--accent-green); margin-bottom:1rem;">
+                    <i class="fas fa-history"></i> AUDIT LOGS
+                </h3>
+                <div class="audit-log" id="auditLog">
+                    <div class="log-entry"><span>🟢 Candidate Added - Hon. Musa Ibrahim</span><span>08:45:23</span></div>
+                    <div class="log-entry"><span>🔵 Verification Approved - Fatima Bello</span><span>08:32:10</span></div>
+                    <div class="log-entry"><span>🟡 Dispute Flagged - Rivers State</span><span>07:58:44</span></div>
+                    <div class="log-entry"><span>🟢 Document Uploaded - Kano Results</span><span>07:12:05</span></div>
+                    <div class="log-entry"><span>🔴 Archive Updated - 2026 Records</span><span>06:45:33</span></div>
+                </div>
+            </div>
+
+            <!-- System Status -->
+            <div class="admin-card">
+                <h3 style="color: var(--accent-green); margin-bottom:1rem;">
+                    <i class="fas fa-server"></i> SYSTEM STATUS
+                </h3>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1rem;">
+                    <div><span class="info-label">Database:</span> <span style="color:#00e08a;">● Online</span></div>
+                    <div><span class="info-label">Real-time Engine:</span> <span style="color:#00e08a;">● Active</span></div>
+                    <div><span class="info-label">Last Backup:</span> 2 mins ago</div>
+                    <div><span class="info-label">Active Users:</span> 47</div>
+                    <div><span class="info-label">API Status:</span> <span style="color:#00e08a;">● Operational</span></div>
+                    <div><span class="info-label">Security Level:</span> Maximum</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function handleLogout() {
+            sessionStorage.clear();
+            window.location.href = 'auth.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!sessionStorage.getItem('sentinel_auth')) {
+                window.location.href = 'auth.html';
+                return;
+            }
+
+            // Live clock
+            setInterval(() => {
+                document.getElementById('liveClock').textContent = 
+                    new Date().toLocaleTimeString('en-NG', { timeZone: 'Africa/Lagos', hour12: false });
+            }, 1000);
+
+            // Add new audit log entries periodically
+            setInterval(() => {
+                const logDiv = document.getElementById('auditLog');
+                const actions = ['Candidate Verified', 'Document Reviewed', 'Status Updated', 'Report Generated'];
+                const action = actions[Math.floor(Math.random() * actions.length)];
+                const time = new Date().toLocaleTimeString('en-NG', { hour12: false });
+                const entry = document.createElement('div');
+                entry.className = 'log-entry';
+                entry.innerHTML = `<span>🟢 ${action}</span><span>${time}</span>`;
+                logDiv.insertBefore(entry, logDiv.firstChild);
+            }, 15000);
+        });
+    </script>
+</body>
+</html>
