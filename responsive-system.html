@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>SENTINEL | Responsive Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ============================================
+           SENTINEL GLOBAL RESPONSIVE DESIGN SYSTEM
+           ============================================ */
+
+        /* --- CSS Custom Properties --- */
+        :root {
+            /* Colors */
+            --deep-green: #006647;
+            --gold: #d4af37;
+            --midnight: #020c17;
+            --intel-blue: #0f283f;
+            --text-primary: #e6edf3;
+            --text-secondary: #9bb7d4;
+            --accent-green: #00b87a;
+            --danger: #ff4444;
+            --warning: #ffa500;
+            --info: #6495ED;
+
+            /* Spacing */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+
+            /* Border Radius */
+            --radius-sm: 0.5rem;
+            --radius-md: 0.8rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            --radius-2xl: 2rem;
+
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+            --shadow-lg: 0 15px 40px rgba(0,0,0,0.6);
+            --shadow-glow: 0 0 20px rgba(0,184,122,0.3);
+
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.25s ease;
+            --transition-slow: 0.4s ease;
+
+            /* Font Sizes */
+            --text-xs: 0.7rem;
+            --text-sm: 0.8rem;
+            --text-base: 0.9rem;
+            --text-lg: 1.1rem;
+            --text-xl: 1.4rem;
+            --text-2xl: 1.8rem;
+            --text-3xl: 2.2rem;
+
+            /* Layout */
+            --sidebar-width: 280px;
+            --sidebar-collapsed: 70px;
+            --topnav-height: 64px;
+        }
+
+        /* --- Global Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--midnight);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* --- Utility Classes --- */
+        .hidden-mobile { }
+        .hidden-tablet { }
+        .hidden-desktop { display: none; }
+        .show-mobile { display: none; }
+        .show-tablet { display: none; }
+
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-sm { gap: var(--space-sm); }
+        .gap-md { gap: var(--space-md); }
+        .gap-lg { gap: var(--space-lg); }
+
+        .w-full { width: 100%; }
+        .h-full { height: 100%; }
+
+        .truncate {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* --- Grid System --- */
+        .grid { display: grid; }
+        .grid-cols-1 { grid-template-columns: 1fr; }
+        .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+        .grid-cols-auto { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+
+        /* --- Page Layout --- */
+        .page-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Demo Styles --- */
+        .demo-header {
+            background: rgba(2, 13, 26, 0.95);
+            border-bottom: 2px solid rgba(0, 180, 120, 0.4);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .demo-content {
+            padding: 2rem;
+            flex: 1;
+        }
+
+        .preview-box {
+            background: rgba(8, 20, 32, 0.8);
+            border: 1px solid rgba(0, 180, 120, 0.2);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .preview-title {
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: var(--text-sm);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .device-frame {
+            border: 3px solid #333;
+            border-radius: 2rem;
+            overflow: hidden;
+            background: #000;
+            margin: 1rem auto;
+            position: relative;
+        }
+
+        .device-frame.mobile {
+            width: 375px;
+            height: 667px;
+        }
+
+        .device-frame.tablet {
+            width: 768px;
+            height: 900px;
+        }
+
+        .device-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .device-label {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: var(--text-xs);
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .breakpoint-indicator {
+            position: fixed;
+            bottom: 1rem;
+            left: 1rem;
+            background: rgba(0,0,0,0.8);
+            color: var(--accent-green);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 9999;
+            border: 1px solid var(--accent-green);
+        }
+
+        .responsive-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: var(--text-sm);
+        }
+
+        .responsive-table th {
+            text-align: left;
+            padding: 0.8rem;
+            background: rgba(0,0,0,0.3);
+            color: var(--text-secondary);
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .responsive-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            white-space: nowrap;
+        }
+
+        .responsive-table .col-priority-1 { }
+        .responsive-table .col-priority-2 { }
+        .responsive-table .col-priority-3 { }
+        .responsive-table .col-priority-4 { }
+
+        .color-swatch {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* --- Media Queries --- */
+
+        /* Extra Small Devices (phones, < 480px) */
+        @media (max-width: 480px) {
+            :root {
+                --text-2xl: 1.5rem;
+                --text-3xl: 1.8rem;
+                --space-xl: 1.5rem;
+                --space-2xl: 2rem;
+            }
+
+            .demo-content {
+                padding: 1rem;
+            }
+
+            .preview-box {
+                padding: 1rem;
+            }
+
+            .grid-cols-2,
+            .grid-cols-3,
+            .grid-cols-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-cols-auto {
+                grid-template-columns: 1fr;
+            }
+
+            .hidden-mobile {
+                display: none !important;
+            }
+
+            .show-mobile {
+                display: block;
+            }
+
+            .responsive-table .col-priority-3,
+            .responsive-table .col-priority-4 {
+                display: none;
+            }
+
+            .responsive-table {
+                font-size: var(--text-xs);
+            }
+        }
+
+        /* Small Devices (large phones, 481px - 640px) */
+        @media (min-width: 481px) and (max-width: 640px) {
+            .grid-cols-3,
+            .grid-cols-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .responsive-table .col-priority-4 {
+                display: none;
+            }
+        }
+
+        /* Medium Devices (tablets, 641px - 968px) */
+        @media (min-width: 641px) and (max-width: 968px) {
+            :root {
+                --sidebar-width: 70px;
+            }
+
+            .hidden-tablet {
+                display: none !important;
+            }
+
+            .show-tablet {
+                display: block;
+            }
+
+            .grid-cols-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .responsive-table .col-priority-4 {
+                display: none;
+            }
+        }
+
+        /* Large Devices (small laptops, 969px - 1200px) */
+        @media (min-width: 969px) and (max-width: 1200px) {
+            .grid-cols-4 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Extra Large Devices (desktops, > 1200px) */
+        @media (min-width: 1201px) {
+            .hidden-desktop {
+                display: none;
+            }
+        }
+
+        /* Landscape orientation for mobile */
+        @media (max-width: 968px) and (orientation: landscape) {
+            :root {
+                --topnav-height: 50px;
+            }
+
+            .demo-header {
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        /* High-DPI screens */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            /* Retina-specific styles if needed */
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .demo-header,
+            .breakpoint-indicator {
+                display: none;
+            }
+        }
+
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            /* Already dark by default */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Breakpoint Indicator -->
+    <div class="breakpoint-indicator" id="breakpointIndicator">
+        📱 <span id="breakpointText">Loading...</span>
+    </div>
+
+    <!-- Demo Header -->
+    <header class="demo-header">
+        <div style="display:flex; align-items:center; gap:1rem;">
+            <div style="background:linear-gradient(135deg,#0a4b33,#043322); padding:0.4rem 0.8rem; border-radius:2rem; border:1px solid var(--gold); color:#f5e7c6; font-weight:700; font-size:0.8rem;">
+                <i class="fas fa-flag"></i> APC
+            </div>
+            <strong style="letter-spacing:2px;">SENTINEL<span style="color:var(--accent-green);">.</span></strong>
+        </div>
+        <div style="color:var(--accent-green); font-weight:600; font-size:0.8rem;">
+            <i class="fas fa-mobile-alt"></i> RESPONSIVE DESIGN SYSTEM
+        </div>
+    </header>
+
+    <!-- Demo Content -->
+    <main class="demo-content">
+        
+        <!-- Current Breakpoint Info -->
+        <div class="preview-box">
+            <div class="preview-title">📐 Current Viewport</div>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1rem;">
+                <div>
+                    <span style="color:var(--text-secondary);">Width:</span>
+                    <strong id="viewportWidth">0px</strong>
+                </div>
+                <div>
+                    <span style="color:var(--text-secondary);">Height:</span>
+                    <strong id="viewportHeight">0px</strong>
+                </div>
+                <div>
+                    <span style="color:var(--text-secondary);">Device:</span>
+                    <strong id="deviceType">-</strong>
+                </div>
+                <div>
+                    <span style="color:var(--text-secondary);">Orientation:</span>
+                    <strong id="orientation">-</strong>
+                </div>
+                <div>
+                    <span style="color:var(--text-secondary);">Pixel Ratio:</span>
+                    <strong id="pixelRatio">-</strong>
+                </div>
+                <div>
+                    <span style="color:var(--text-secondary);">Breakpoint:</span>
+                    <strong id="currentBreakpoint" style="color:var(--accent-green);">-</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Responsive Grid Demo -->
+        <div class="preview-box">
+            <div class="preview-title">📦 Responsive Grid System</div>
+            <div class="grid grid-cols-4 gap-md" style="margin-bottom:1rem;">
+                <div style="background:rgba(0,184,122,0.2); padding:1.5rem; border-radius:var(--radius-md); text-align:center;">Col 1</div>
+                <div style="background:rgba(0,184,122,0.2); padding:1.5rem; border-radius:var(--radius-md); text-align:center;">Col 2</div>
+                <div style="background:rgba(0,184,122,0.2); padding:1.5rem; border-radius:var(--radius-md); text-align:center;">Col 3</div>
+                <div style="background:rgba(0,184,122,0.2); padding:1.5rem; border-radius:var(--radius-md); text-align:center;">Col 4</div>
+            </div>
+            <p style="color:var(--text-secondary); font-size:var(--text-xs);">
+                Resize browser to see columns collapse. 4 cols → 3 cols → 2 cols → 1 col
+            </p>
+        </div>
+
+        <!-- Responsive Table Demo -->
+        <div class="preview-box">
+            <div class="preview-title">📊 Responsive Table (Columns hide on mobile)</div>
+            <div style="overflow-x:auto;">
+                <table class="responsive-table">
+                    <thead>
+                        <tr>
+                            <th class="col-priority-1">Candidate</th>
+                            <th class="col-priority-1">Office</th>
+                            <th class="col-priority-2">State</th>
+                            <th class="col-priority-2">Votes</th>
+                            <th class="col-priority-3">Date</th>
+                            <th class="col-priority-4">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-priority-1">Hon. Musa Ibrahim</td>
+                            <td class="col-priority-1">Senate</td>
+                            <td class="col-priority-2">Kano</td>
+                            <td class="col-priority-2">1,248</td>
+                            <td class="col-priority-3">May 7, 2026</td>
+                            <td class="col-priority-4"><span style="color:var(--accent-green);">Verified</span></td>
+                        </tr>
+                        <tr>
+                            <td class="col-priority-1">Fatima Bello</td>
+                            <td class="col-priority-1">House of Reps</td>
+                            <td class="col-priority-2">Kaduna</td>
+                            <td class="col-priority-2">876</td>
+                            <td class="col-priority-3">May 6, 2026</td>
+                            <td class="col-priority-4"><span style="color:var(--warning);">Pending</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Hiding/Showing Elements -->
+        <div class="preview-box">
+            <div class="preview-title">👁 Visibility Control</div>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1rem;">
+                <div style="padding:1rem; background:rgba(100,149,237,0.2); border-radius:var(--radius-md);" class="hidden-mobile">
+                    <i class="fas fa-desktop"></i> <strong>Hidden on Mobile</strong>
+                    <br><small style="color:var(--text-secondary);">Visible only on tablet & desktop</small>
+                </div>
+                <div style="padding:1rem; background:rgba(255,165,0,0.2); border-radius:var(--radius-md);" class="show-mobile">
+                    <i class="fas fa-mobile-alt"></i> <strong>Only on Mobile</strong>
+                    <br><small style="color:var(--text-secondary);">Visible only on mobile devices</small>
+                </div>
+                <div style="padding:1rem; background:rgba(0,184,122,0.2); border-radius:var(--radius-md);">
+                    <i class="fas fa-check"></i> <strong>Always Visible</strong>
+                    <br><small style="color:var(--text-secondary);">Shows on all devices</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Color System -->
+        <div class="preview-box">
+            <div class="preview-title">🎨 Color System</div>
+            <div class="grid grid-cols-auto gap-md">
+                <div>
+                    <span class="color-swatch" style="background:var(--deep-green);"></span>
+                    <strong>Deep Green</strong> - APC Identity
+                </div>
+                <div>
+                    <span class="color-swatch" style="background:var(--gold);"></span>
+                    <strong>Gold</strong> - Prestige
+                </div>
+                <div>
+                    <span class="color-swatch" style="background:var(--midnight);"></span>
+                    <strong>Midnight</strong> - Background
+                </div>
+                <div>
+                    <span class="color-swatch" style="background:var(--accent-green);"></span>
+                    <strong>Accent Green</strong> - CTAs
+                </div>
+                <div>
+                    <span class="color-swatch" style="background:var(--danger);"></span>
+                    <strong>Red</strong> - Disputes
+                </div>
+                <div>
+                    <span class="color-swatch" style="background:var(--warning);"></span>
+                    <strong>Orange</strong> - Pending
+                </div>
+                <div>
+                    <span class="color-swatch" style="background:var(--info);"></span>
+                    <strong>Blue</strong> - Info
+                </div>
+                <div>
+                    <span class="color-swatch" style="background:var(--text-primary);"></span>
+                    <strong>White</strong> - Text
+                </div>
+            </div>
+        </div>
+
+        <!-- Typography Scale -->
+        <div class="preview-box">
+            <div class="preview-title">🔤 Typography Scale</div>
+            <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                <p style="font-size:var(--text-3xl); font-weight:800;">Heading 1 (2.2rem)</p>
+                <p style="font-size:var(--text-2xl); font-weight:700;">Heading 2 (1.8rem)</p>
+                <p style="font-size:var(--text-xl); font-weight:600;">Heading 3 (1.4rem)</p>
+                <p style="font-size:var(--text-lg);">Body Large (1.1rem)</p>
+                <p style="font-size:var(--text-base);">Body (0.9rem)</p>
+                <p style="font-size:var(--text-sm); color:var(--text-secondary);">Caption (0.8rem)</p>
+                <p style="font-size:var(--text-xs); color:var(--text-secondary);">Small (0.7rem)</p>
+            </div>
+        </div>
+
+        <!-- Spacing Scale -->
+        <div class="preview-box">
+            <div class="preview-title">📏 Spacing Scale</div>
+            <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                <div style="display:flex; align-items:center; gap:1rem;">
+                    <div style="width:var(--space-xs); height:20px; background:var(--accent-green);"></div>
+                    <span>xs (0.25rem / 4px)</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:1rem;">
+                    <div style="width:var(--space-sm); height:20px; background:var(--accent-green);"></div>
+                    <span>sm (0.5rem / 8px)</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:1rem;">
+                    <div style="width:var(--space-md); height:20px; background:var(--accent-green);"></div>
+                    <span>md (1rem / 16px)</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:1rem;">
+                    <div style="width:var(--space-lg); height:20px; background:var(--accent-green);"></div>
+                    <span>lg (1.5rem / 24px)</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:1rem;">
+                    <div style="width:var(--space-xl); height:20px; background:var(--accent-green);"></div>
+                    <span>xl (2rem / 32px)</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:1rem;">
+                    <div style="width:var(--space-2xl); height:20px; background:var(--accent-green);"></div>
+                    <span>2xl (3rem / 48px)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Responsive Navigation Pattern -->
+        <div class="preview-box">
+            <div class="preview-title">🧭 Navigation Patterns</div>
+            <div class="grid grid-cols-2 gap-md">
+                <div style="padding:1rem; background:rgba(0,0,0,0.3); border-radius:var(--radius-md);">
+                    <strong>Desktop:</strong> Full sidebar with icons + text
+                    <div style="margin-top:0.5rem; display:flex; flex-direction:column; gap:0.3rem;">
+                        <div style="padding:0.5rem; background:rgba(0,184,122,0.2); border-radius:0.5rem; display:flex; align-items:center; gap:0.5rem;">
+                            <i class="fas fa-home"></i> Dashboard
+                        </div>
+                        <div style="padding:0.5rem; border-radius:0.5rem; display:flex; align-items:center; gap:0.5rem; color:var(--text-secondary);">
+                            <i class="fas fa-database"></i> Registry
+                        </div>
+                        <div style="padding:0.5rem; border-radius:0.5rem; display:flex; align-items:center; gap:0.5rem; color:var(--text-secondary);">
+                            <i class="fas fa-chart-pie"></i> Analytics
+                        </div>
+                    </div>
+                </div>
+                <div style="padding:1rem; background:rgba(0,0,0,0.3); border-radius:var(--radius-md);">
+                    <strong>Mobile:</strong> Collapsed icons only
+                    <div style="margin-top:0.5rem; display:flex; flex-direction:column; gap:0.3rem; width:60px;">
+                        <div style="padding:0.5rem; background:rgba(0,184,122,0.2); border-radius:0.5rem; text-align:center;">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div style="padding:0.5rem; border-radius:0.5rem; text-align:center; color:var(--text-secondary);">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div style="padding:0.5rem; border-radius:0.5rem; text-align:center; color:var(--text-secondary);">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Detect and display current breakpoint
+        function updateBreakpointInfo() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            let breakpoint = '';
+            let deviceType = '';
+
+            if (width <= 480) {
+                breakpoint = 'Extra Small (Mobile)';
+                deviceType = '📱 Phone';
+            } else if (width <= 640) {
+                breakpoint = 'Small (Large Phone)';
+                deviceType = '📱 Large Phone';
+            } else if (width <= 968) {
+                breakpoint = 'Medium (Tablet)';
+                deviceType = '📋 Tablet';
+            } else if (width <= 1200) {
+                breakpoint = 'Large (Laptop)';
+                deviceType = '💻 Laptop';
+            } else {
+                breakpoint = 'Extra Large (Desktop)';
+                deviceType = '🖥 Desktop';
+            }
+
+            document.getElementById('viewportWidth').textContent = width + 'px';
+            document.getElementById('viewportHeight').textContent = height + 'px';
+            document.getElementById('deviceType').textContent = deviceType;
+            document.getElementById('orientation').textContent = 
+                width > height ? 'Landscape' : 'Portrait';
+            document.getElementById('pixelRatio').textContent = 
+                window.devicePixelRatio + 'x';
+            document.getElementById('currentBreakpoint').textContent = breakpoint;
+            document.getElementById('breakpointText').textContent = 
+                width + 'px • ' + breakpoint;
+        }
+
+        // Update on resize
+        window.addEventListener('resize', updateBreakpointInfo);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(updateBreakpointInfo, 100);
+        });
+
+        // Initial update
+        updateBreakpointInfo();
+
+        // Keyboard shortcut to toggle breakpoint indicator
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'b' && e.ctrlKey) {
+                e.preventDefault();
+                const indicator = document.getElementById('breakpointIndicator');
+                indicator.style.display = 
+                    indicator.style.display === 'none' ? 'block' : 'none';
+            }
+        });
+
+        console.log('%c📐 SENTINEL Responsive Design System Loaded %c| %cResize browser to test',
+            'color: #00b87a; font-weight: bold;', '', 'color: #d4af37;');
+    </script>
+</body>
+</html>
