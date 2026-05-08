@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENTINEL | Admin Command</title>
+    <title>SENTINEL · Administration</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="js/mobile-nav.js"></script>
     <link rel="stylesheet" href="css/sentinel-responsive.css">
+    <script src="js/mobile-nav.js"></script>
     <style>
         :root {
-            --deep-green: #006647;
-            --gold: #d4af37;
-            --midnight: #020c17;
-            --intel-blue: #0f283f;
-            --text-primary: #e6edf3;
-            --text-secondary: #9bb7d4;
-            --accent-green: #00b87a;
+            --navy-deep: #0a1628;
+            --navy-panel: #0f2035;
+            --text-primary: #dde4ed;
+            --text-secondary: #8da0b8;
+            --green: #00a86b;
+            --gold: #c4a030;
+            --border: rgba(255, 255, 255, 0.07);
+            --red: #d94a4a;
         }
 
         * {
@@ -26,20 +27,25 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--midnight);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy-deep);
             color: var(--text-primary);
             min-height: 100vh;
+            letter-spacing: -0.01em;
         }
 
         .top-nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.8rem 2rem;
-            background: rgba(2, 13, 26, 0.95);
-            border-bottom: 1px solid rgba(0, 180, 120, 0.3);
-            backdrop-filter: blur(20px);
+            height: 60px;
+            padding: 0 1.75rem;
+            background: rgba(10, 22, 40, 0.94);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .nav-brand {
@@ -48,203 +54,300 @@
             gap: 1rem;
         }
 
-        .apc-emblem {
-            background: linear-gradient(135deg, #0a4b33, #043322);
-            padding: 0.4rem 0.8rem;
-            border-radius: 2rem;
-            border: 1px solid var(--gold);
-            color: #f5e7c6;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
+        .nav-brand img {
+            height: 30px;
         }
 
-        .sentinel-logo {
+        .nav-brand .logo-text {
             font-weight: 700;
-            font-size: 1.4rem;
-            letter-spacing: 2px;
+            font-size: 1.2rem;
+            letter-spacing: 1.5px;
         }
 
-        .sentinel-logo span {
-            color: var(--accent-green);
+        .nav-brand .logo-text span {
+            color: var(--green);
         }
 
         .main-layout {
             display: flex;
-            min-height: calc(100vh - 64px);
+            min-height: calc(100vh - 60px);
         }
 
         .sidebar {
-            width: 260px;
-            background: rgba(5, 16, 30, 0.9);
-            border-right: 1px solid rgba(0, 180, 120, 0.2);
-            padding: 1.5rem 1rem;
+            width: 250px;
+            background: rgba(13, 25, 42, 0.6);
+            border-right: 1px solid var(--border);
+            padding: 1.25rem 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .sidebar-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: #5a7795;
+            padding: 0.6rem 0.9rem 0.4rem;
+            font-weight: 600;
         }
 
         .nav-item {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            padding: 0.8rem 1rem;
-            border-radius: 0.8rem;
+            gap: 0.7rem;
+            padding: 0.65rem 0.9rem;
+            border-radius: 0.5rem;
             color: var(--text-secondary);
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.12s ease;
             font-weight: 500;
             border: none;
             background: transparent;
             width: 100%;
             text-align: left;
-            font-size: 0.9rem;
-            margin-bottom: 0.3rem;
+            font-size: 0.84rem;
+            margin-bottom: 0.1rem;
         }
 
-        .nav-item:hover, .nav-item.active {
-            background: rgba(0, 184, 122, 0.15);
-            color: var(--accent-green);
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: #c0d0e0;
+        }
+
+        .nav-item.active {
+            background: rgba(0, 168, 107, 0.1);
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .nav-item i {
+            width: 16px;
+            text-align: center;
+            font-size: 0.8rem;
         }
 
         .content-area {
             flex: 1;
-            padding: 2rem;
+            padding: 1.5rem;
             overflow-y: auto;
         }
 
-        .admin-card {
-            background: rgba(8, 20, 32, 0.8);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            border: 1px solid rgba(0, 180, 120, 0.2);
+        .page-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #eef2f7;
             margin-bottom: 1.5rem;
+        }
+
+        .admin-card {
+            background: var(--navy-panel);
+            border: 1px solid var(--border);
+            border-radius: 0.85rem;
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .card-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .form-group label {
+            font-size: 0.75rem;
             color: var(--text-secondary);
-            font-size: 0.85rem;
             font-weight: 500;
         }
 
         .form-input {
-            background: rgba(15, 35, 55, 0.8);
-            border: 1px solid rgba(0, 180, 120, 0.25);
-            border-radius: 0.8rem;
-            padding: 0.8rem;
+            background: rgba(20, 40, 60, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 0.6rem 0.8rem;
             color: var(--text-primary);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-input:focus {
+            border-color: var(--green);
+        }
+
+        select.form-input {
+            cursor: pointer;
         }
 
         .btn {
-            padding: 0.7rem 1.5rem;
-            border-radius: 0.8rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.5rem;
             font-weight: 600;
             cursor: pointer;
             border: none;
-            transition: 0.2s;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            transition: background 0.12s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
         }
 
         .btn-primary {
-            background: var(--accent-green);
-            color: white;
+            background: var(--green);
+            color: #fff;
         }
 
         .btn-primary:hover {
-            background: #00d48f;
-        }
-
-        .btn-danger {
-            background: #ff4444;
-            color: white;
+            background: #00955e;
         }
 
         .btn-warning {
-            background: var(--gold);
-            color: #020c17;
+            background: rgba(196, 160, 48, 0.15);
+            color: var(--gold);
+            border: 1px solid rgba(196, 160, 48, 0.3);
+        }
+
+        .btn-warning:hover {
+            background: rgba(196, 160, 48, 0.25);
+        }
+
+        .btn-danger {
+            background: rgba(217, 74, 74, 0.1);
+            color: var(--red);
+            border: 1px solid rgba(217, 74, 74, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: rgba(217, 74, 74, 0.2);
         }
 
         .audit-log {
-            background: rgba(0,0,0,0.3);
-            border-radius: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 0.6rem;
             padding: 1rem;
-            max-height: 300px;
+            max-height: 280px;
             overflow-y: auto;
-            font-family: monospace;
-            font-size: 0.85rem;
+            font-family: 'SF Mono', 'Consolas', monospace;
+            font-size: 0.8rem;
         }
 
         .log-entry {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 0.45rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             display: flex;
             justify-content: space-between;
+            color: var(--text-secondary);
+        }
+
+        .log-entry .log-time {
+            color: #5a7795;
+            font-size: 0.75rem;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            margin-right: 0.4rem;
+        }
+
+        .status-online {
+            background: var(--green);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 55px;
+            }
+            .nav-item span,
+            .sidebar-label {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
     <nav class="top-nav">
-        <div class="nav-brand">
-           <div class="apc-emblem">
-    <img src="assets/apc2.png" alt="APC Logo" class="apc-logo-img">
-</div>
-            <div class="sentinel-logo">APC<span>.</span></div>
-        </div>
-        <div style="display:flex; align-items:center; gap:1rem;">
-            <span id="liveClock"></span>
-            <span style="background: var(--accent-green); padding:0.3rem 1rem; border-radius:2rem; font-weight:600; animation: pulse 2s infinite;">
-                <i class="fas fa-shield"></i> ADMIN MODE
-            </span>
-        </div>
-    </nav>
-
+    <!-- Left: Brand -->
+    <div class="nav-brand">
+        <img src="assets/apc2.png" alt="APC" class="nav-logo-img" onerror="this.style.display='none'">
+        <span class="nav-logo-text">APC<span>.</span></span>
+    </div>
+    
+    <!-- Center: Hamburger (mobile only) -->
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Right: Status items -->
+    <div class="nav-status">
+        <span class="nav-pill nav-pill-live">
+            <span class="pulse-dot"></span> Live
+        </span>
+        <span class="nav-pill nav-pill-role" id="roleBadge">
+            <i class="fas fa-shield-alt"></i> Admin
+        </span>
+        <span class="nav-time" id="liveClock">--:--:--</span>
+    </div>
+</nav>
     <div class="main-layout">
         <aside class="sidebar">
+            <div class="sidebar-label">Platform</div>
             <button class="nav-item" onclick="window.location.href='dashboard.html'">
-                <i class="fas fa-th-large"></i> Command Center
+                <i class="fas fa-compass"></i> <span>Command Center</span>
             </button>
             <button class="nav-item" onclick="window.location.href='candidates.html'">
-                <i class="fas fa-database"></i> Winner Registry
+                <i class="fas fa-database"></i> <span>Winner Registry</span>
             </button>
             <button class="nav-item" onclick="window.location.href='analytics.html'">
-                <i class="fas fa-chart-pie"></i> Analytics
+                <i class="fas fa-chart-bar"></i> <span>Analytics</span>
             </button>
             <button class="nav-item" onclick="window.location.href='profile.html'">
-                <i class="fas fa-user"></i> Profiles
+                <i class="fas fa-user"></i> <span>Profiles</span>
             </button>
+            <div class="sidebar-label">System</div>
             <button class="nav-item active">
-                <i class="fas fa-cog"></i> Admin
+                <i class="fas fa-shield-alt"></i> <span>Administration</span>
             </button>
             <button class="nav-item" onclick="handleLogout()">
-                <i class="fas fa-sign-out-alt"></i> Logout
+                <i class="fas fa-sign-out-alt"></i> <span>Sign Out</span>
             </button>
         </aside>
 
         <main class="content-area">
-            <h2 style="margin-bottom:1.5rem; color: var(--gold);">
-                <i class="fas fa-crown"></i> ADMINISTRATIVE COMMAND CENTER
-            </h2>
+            <h2 class="page-title">Administrative Command Center</h2>
 
-            <!-- Add Candidate Form -->
+            <!-- Add Winner -->
             <div class="admin-card">
-                <h3 style="color: var(--accent-green); margin-bottom:1.5rem;">
-                    <i class="fas fa-user-plus"></i> ADD NEW WINNER
-                </h3>
+                <h3 class="card-title"><i class="fas fa-user-plus"></i> Register New Winner</h3>
                 <div class="form-grid">
                     <div class="form-group">
                         <label>Full Name *</label>
-                        <input type="text" class="form-input" placeholder="Full name as per records">
+                        <input type="text" class="form-input" placeholder="As per official records">
                     </div>
                     <div class="form-group">
                         <label>Office *</label>
@@ -252,7 +355,7 @@
                             <option>Select Office</option>
                             <option>Governor</option>
                             <option>Senate</option>
-                            <option>House of Reps</option>
+                            <option>House of Representatives</option>
                             <option>State Assembly</option>
                         </select>
                     </div>
@@ -260,67 +363,62 @@
                         <label>State *</label>
                         <select class="form-input">
                             <option>Select State</option>
-                            <option>Lagos</option><option>Kano</option><option>Kaduna</option>
+                            <option>Kano</option><option>Lagos</option><option>Kaduna</option>
+                            <option>Borno</option><option>Rivers</option><option>Enugu</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Constituency</label>
-                        <input type="text" class="form-input" placeholder="Electoral zone">
+                        <input type="text" class="form-input" placeholder="Electoral constituency">
                     </div>
                     <div class="form-group">
                         <label>Delegate Votes *</label>
-                        <input type="number" class="form-input" placeholder="Number of votes">
+                        <input type="number" class="form-input" placeholder="Vote count">
                     </div>
                     <div class="form-group">
-                        <label>Date Declared</label>
+                        <label>Declaration Date</label>
                         <input type="date" class="form-input">
                     </div>
                 </div>
-                <div style="margin-top:1.5rem; display:flex; gap:1rem;">
-                    <button class="btn btn-primary"><i class="fas fa-save"></i> Add Candidate</button>
-                    <button class="btn btn-warning"><i class="fas fa-clock"></i> Save as Draft</button>
+                <div class="action-buttons">
+                    <button class="btn btn-primary"><i class="fas fa-save"></i> Register Winner</button>
+                    <button class="btn btn-warning"><i class="fas fa-clock"></i> Save Draft</button>
                 </div>
             </div>
 
             <!-- Quick Actions -->
             <div class="admin-card">
-                <h3 style="color: var(--accent-green); margin-bottom:1.5rem;">
-                    <i class="fas fa-bolt"></i> QUICK ACTIONS
-                </h3>
-                <div style="display:flex; gap:1rem; flex-wrap:wrap;">
-                    <button class="btn btn-primary"><i class="fas fa-check"></i> Verify Candidate</button>
+                <h3 class="card-title"><i class="fas fa-bolt"></i> Quick Actions</h3>
+                <div class="action-buttons">
+                    <button class="btn btn-primary"><i class="fas fa-check-circle"></i> Verify Candidate</button>
                     <button class="btn btn-warning"><i class="fas fa-flag"></i> Flag Dispute</button>
-                    <button class="btn btn-primary"><i class="fas fa-upload"></i> Upload Results</button>
+                    <button class="btn btn-primary"><i class="fas fa-file-upload"></i> Upload Results</button>
                     <button class="btn btn-danger"><i class="fas fa-archive"></i> Archive Records</button>
                 </div>
             </div>
 
             <!-- Audit Logs -->
             <div class="admin-card">
-                <h3 style="color: var(--accent-green); margin-bottom:1rem;">
-                    <i class="fas fa-history"></i> AUDIT LOGS
-                </h3>
+                <h3 class="card-title"><i class="fas fa-history"></i> Audit Trail</h3>
                 <div class="audit-log" id="auditLog">
-                    <div class="log-entry"><span>🟢 Candidate Added - Hon. Musa Ibrahim</span><span>08:45:23</span></div>
-                    <div class="log-entry"><span>🔵 Verification Approved - Fatima Bello</span><span>08:32:10</span></div>
-                    <div class="log-entry"><span>🟡 Dispute Flagged - Rivers State</span><span>07:58:44</span></div>
-                    <div class="log-entry"><span>🟢 Document Uploaded - Kano Results</span><span>07:12:05</span></div>
-                    <div class="log-entry"><span>🔴 Archive Updated - 2026 Records</span><span>06:45:33</span></div>
+                    <div class="log-entry"><span>Registered: Hon. Musa Ibrahim (Senate, Kano)</span><span class="log-time">08:45:23</span></div>
+                    <div class="log-entry"><span>Verified: Fatima Bello (House of Reps, Kaduna)</span><span class="log-time">08:32:10</span></div>
+                    <div class="log-entry"><span>Dispute flagged: Rivers State results</span><span class="log-time">07:58:44</span></div>
+                    <div class="log-entry"><span>Document uploaded: Kano Central results</span><span class="log-time">07:12:05</span></div>
+                    <div class="log-entry"><span>Archive updated: 2026 primary records</span><span class="log-time">06:45:33</span></div>
                 </div>
             </div>
 
             <!-- System Status -->
             <div class="admin-card">
-                <h3 style="color: var(--accent-green); margin-bottom:1rem;">
-                    <i class="fas fa-server"></i> SYSTEM STATUS
-                </h3>
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1rem;">
-                    <div><span class="info-label">Database:</span> <span style="color:#00e08a;">● Online</span></div>
-                    <div><span class="info-label">Real-time Engine:</span> <span style="color:#00e08a;">● Active</span></div>
-                    <div><span class="info-label">Last Backup:</span> 2 mins ago</div>
-                    <div><span class="info-label">Active Users:</span> 47</div>
-                    <div><span class="info-label">API Status:</span> <span style="color:#00e08a;">● Operational</span></div>
-                    <div><span class="info-label">Security Level:</span> Maximum</div>
+                <h3 class="card-title"><i class="fas fa-server"></i> System Status</h3>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:0.75rem;">
+                    <div><span style="color:var(--text-secondary);font-size:0.8rem;">Database:</span> <span style="color:var(--green);"><span class="status-indicator status-online"></span>Online</span></div>
+                    <div><span style="color:var(--text-secondary);font-size:0.8rem;">Real-time Engine:</span> <span style="color:var(--green);"><span class="status-indicator status-online"></span>Active</span></div>
+                    <div><span style="color:var(--text-secondary);font-size:0.8rem;">Last Backup:</span> 2 minutes ago</div>
+                    <div><span style="color:var(--text-secondary);font-size:0.8rem;">Active Users:</span> 47</div>
+                    <div><span style="color:var(--text-secondary);font-size:0.8rem;">API Status:</span> <span style="color:var(--green);"><span class="status-indicator status-online"></span>Operational</span></div>
+                    <div><span style="color:var(--text-secondary);font-size:0.8rem;">Security Level:</span> Maximum</div>
                 </div>
             </div>
         </main>
@@ -332,30 +430,101 @@
             window.location.href = 'auth.html';
         }
 
+        // Update clock in top nav
+function updateClock() {
+    const clockEl = document.getElementById('liveClock');
+    if (clockEl) {
+        const now = new Date();
+        const options = {
+            timeZone: 'Africa/Lagos',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        };
+        clockEl.textContent = now.toLocaleTimeString('en-NG', options) + ' WAT';
+    }
+
+    // Also update role badge
+    const roleEl = document.getElementById('roleText');
+    if (roleEl && roleEl.textContent === 'Loading...') {
+        const user = JSON.parse(sessionStorage.getItem('sentinel_user') || '{}');
+        if (user.role) {
+            roleEl.textContent = user.role.replace(/_/g, ' ').toUpperCase();
+        }
+    }
+}
+
+// Run immediately and then every second
+updateClock();
+setInterval(updateClock, 1000);
         document.addEventListener('DOMContentLoaded', () => {
             if (!sessionStorage.getItem('sentinel_auth')) {
                 window.location.href = 'auth.html';
                 return;
             }
 
-            // Live clock
             setInterval(() => {
                 document.getElementById('liveClock').textContent = 
-                    new Date().toLocaleTimeString('en-NG', { timeZone: 'Africa/Lagos', hour12: false });
+                    new Date().toLocaleTimeString('en-NG', { timeZone: 'Africa/Lagos', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }) + ' WAT';
             }, 1000);
 
-            // Add new audit log entries periodically
             setInterval(() => {
                 const logDiv = document.getElementById('auditLog');
-                const actions = ['Candidate Verified', 'Document Reviewed', 'Status Updated', 'Report Generated'];
+                const actions = ['Candidate verified', 'Document reviewed', 'Status updated', 'Report generated'];
                 const action = actions[Math.floor(Math.random() * actions.length)];
                 const time = new Date().toLocaleTimeString('en-NG', { hour12: false });
                 const entry = document.createElement('div');
                 entry.className = 'log-entry';
-                entry.innerHTML = `<span>🟢 ${action}</span><span>${time}</span>`;
+                entry.innerHTML = `<span>${action}</span><span class="log-time">${time}</span>`;
                 logDiv.insertBefore(entry, logDiv.firstChild);
-            }, 15000);
+            }, 20000);
         });
+    </script>
+    <script>
+// Quick test for hamburger button
+document.addEventListener('DOMContentLoaded', function() {
+    // Find or create a test button
+    var btn = document.querySelector('.hamburger-btn');
+    if (!btn) {
+        btn = document.createElement('button');
+        btn.className = 'hamburger-btn';
+        btn.innerHTML = '<i class="fas fa-bars"></i>';
+        btn.style.cssText = 'display:flex;position:fixed;top:70px;right:20px;z-index:9999;background:#00a86b;color:#fff;width:44px;height:44px;border-radius:8px;border:none;cursor:pointer;align-items:center;justify-content:center;font-size:20px;';
+        document.body.appendChild(btn);
+    }
+    
+    var sidebar = document.querySelector('.sidebar');
+    
+    btn.onclick = function() {
+        if (sidebar) {
+            sidebar.classList.toggle('mobile-open');
+            if (sidebar.classList.contains('mobile-open')) {
+                sidebar.style.transform = 'translateX(0)';
+                btn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                sidebar.style.transform = 'translateX(-100%)';
+                btn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        }
+    };
+});
+</script>
+    <script>
+        function createParticles() {
+            const container = document.getElementById('particlesContainer');
+            for (let i = 0; i < 25; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.bottom = '0';
+                p.style.animationDelay = Math.random() * 4 + 's';
+                p.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                container.appendChild(p);
+            }
+        }
+
+        createParticles();
     </script>
 </body>
 </html>

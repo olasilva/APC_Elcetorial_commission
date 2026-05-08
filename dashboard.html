@@ -3,25 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENTINEL | National Command Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>SENTINEL · Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="css/sentinel-responsive.css">
     <script src="js/mobile-nav.js"></script>
     <style>
         :root {
-            --deep-green: #006647;
-            --gold: #d4af37;
-            --midnight: #020c17;
-            --intel-blue: #0f283f;
-            --text-primary: #e6edf3;
-            --text-secondary: #9bb7d4;
-            --accent-green: #00b87a;
-            --danger: #ff4444;
-            --warning: #ffa500;
-            --info: #6495ED;
-            --purple: #BA55D3;
+            --navy-deep: #0a1628;
+            --navy-panel: #0f2035;
+            --text-primary: #dde4ed;
+            --text-secondary: #8da0b8;
+            --green: #00a86b;
+            --gold: #c4a030;
+            --border: rgba(255, 255, 255, 0.07);
+            --red: #d94a4a;
+            --amber: #d4a030;
+            --blue: #4a8fc9;
         }
 
         * {
@@ -31,25 +29,25 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--midnight);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy-deep);
             color: var(--text-primary);
             min-height: 100vh;
-            overflow-x: hidden;
+            letter-spacing: -0.01em;
         }
 
-        /* TOP NAVIGATION */
         .top-nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.8rem 2rem;
-            background: rgba(2, 13, 26, 0.98);
-            border-bottom: 2px solid rgba(0, 180, 120, 0.4);
-            backdrop-filter: blur(20px);
+            height: 60px;
+            padding: 0 1.75rem;
+            background: rgba(10, 22, 40, 0.94);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 100;
         }
 
         .nav-brand {
@@ -58,359 +56,183 @@
             gap: 1rem;
         }
 
-        .apc-emblem img {
-            height: 40px;
-            width: auto;
-            object-fit: contain;
+        .nav-brand img {
+            height: 30px;
         }
 
-        .sentinel-logo {
-            font-weight: 800;
-            font-size: 1.5rem;
-            letter-spacing: 3px;
-        }
-
-        .sentinel-logo span {
-            color: var(--accent-green);
-        }
-
-        .nav-stats {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .nav-stat {
-            text-align: center;
-            padding: 0.4rem 1.2rem;
-            background: rgba(0,0,0,0.3);
-            border-radius: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .nav-stat:hover {
-            background: rgba(0,184,122,0.15);
-        }
-
-        .nav-stat-value {
+        .nav-brand .logo-text {
             font-weight: 700;
             font-size: 1.2rem;
-            color: var(--accent-green);
+            letter-spacing: 1.5px;
         }
 
-        .nav-stat-value.pending {
-            color: var(--warning);
-            animation: pulse 2s infinite;
+        .nav-brand .logo-text span {
+            color: var(--green);
         }
 
-        .nav-stat-label {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .nav-controls {
+        .nav-meta {
             display: flex;
             align-items: center;
             gap: 1.5rem;
         }
 
-        .live-badge {
-            background: var(--accent-green);
-            color: #030e18;
-            font-weight: 700;
-            padding: 0.4rem 1.2rem;
-            border-radius: 2rem;
-            font-size: 0.8rem;
-            animation: pulseBadge 2s infinite;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .role-badge {
-            background: rgba(212, 175, 55, 0.2);
-            color: var(--gold);
-            padding: 0.4rem 1rem;
-            border-radius: 2rem;
-            font-size: 0.8rem;
+        .nav-badge {
+            font-size: 0.75rem;
             font-weight: 600;
-        }
-
-        @keyframes pulseBadge {
-            0%, 100% { box-shadow: 0 0 8px var(--accent-green); }
-            50% { box-shadow: 0 0 25px #00ff9d, 0 0 50px rgba(0, 255, 157, 0.3); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            cursor: pointer;
-            padding: 0.4rem 1rem;
-            background: rgba(255,255,255,0.05);
+            padding: 0.3rem 0.9rem;
             border-radius: 2rem;
-            transition: 0.2s;
         }
 
-        .user-menu:hover {
-            background: rgba(255,255,255,0.1);
+        .badge-live {
+            background: rgba(0, 168, 107, 0.15);
+            color: var(--green);
+            border: 1px solid rgba(0, 168, 107, 0.3);
         }
 
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #1e3b51;
-            border: 2px solid var(--gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
+        .badge-role {
+            background: rgba(196, 160, 48, 0.1);
+            color: var(--gold);
+            border: 1px solid rgba(196, 160, 48, 0.2);
         }
 
-        /* MAIN LAYOUT */
+        .nav-clock {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-variant-numeric: tabular-nums;
+        }
+
         .main-layout {
             display: flex;
-            min-height: calc(100vh - 70px);
+            min-height: calc(100vh - 60px);
         }
 
-        /* SIDEBAR */
         .sidebar {
-            width: 280px;
-            background: rgba(5, 16, 30, 0.95);
-            border-right: 1px solid rgba(0, 180, 120, 0.2);
-            padding: 1.5rem 1rem;
-            overflow-y: auto;
+            width: 250px;
+            background: rgba(13, 25, 42, 0.6);
+            border-right: 1px solid var(--border);
+            padding: 1.25rem 0.75rem;
             flex-shrink: 0;
         }
 
         .sidebar-section {
-            margin-bottom: 1.2rem;
+            margin-bottom: 0.75rem;
         }
 
-        .sidebar-title {
-            font-size: 0.7rem;
+        .sidebar-label {
+            font-size: 0.6rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-secondary);
-            padding: 0.5rem 1rem;
+            letter-spacing: 2.5px;
+            color: #5a7795;
+            padding: 0.6rem 0.9rem 0.4rem;
             font-weight: 600;
         }
 
         .nav-item {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            padding: 0.8rem 1rem;
-            border-radius: 0.8rem;
+            gap: 0.7rem;
+            padding: 0.65rem 0.9rem;
+            border-radius: 0.5rem;
             color: var(--text-secondary);
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.12s ease;
             font-weight: 500;
             border: none;
             background: transparent;
             width: 100%;
             text-align: left;
-            font-size: 0.9rem;
-            margin-bottom: 0.2rem;
+            font-size: 0.84rem;
+            margin-bottom: 0.1rem;
         }
 
         .nav-item:hover {
-            background: rgba(0, 184, 122, 0.1);
-            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.03);
+            color: #c0d0e0;
         }
 
         .nav-item.active {
-            background: rgba(0, 184, 122, 0.2);
-            color: var(--accent-green);
+            background: rgba(0, 168, 107, 0.1);
+            color: var(--green);
             font-weight: 600;
-            border-left: 3px solid var(--accent-green);
         }
 
-        .nav-badge {
-            background: var(--accent-green);
-            color: #020c17;
-            padding: 0.2rem 0.6rem;
+        .nav-item i {
+            width: 16px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        .nav-badge-count {
+            background: var(--amber);
+            color: #0a1628;
+            padding: 0.15rem 0.5rem;
             border-radius: 1rem;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 700;
             margin-left: auto;
         }
 
-        .nav-badge.warning {
-            background: var(--warning);
-            animation: pulse 1.5s infinite;
-        }
-
-        .nav-badge.danger {
-            background: var(--danger);
-        }
-
-        /* CONTENT AREA */
         .content-area {
             flex: 1;
             padding: 1.5rem;
             overflow-y: auto;
-            max-height: calc(100vh - 70px);
         }
 
-        /* VERIFICATION PIPELINE */
-        .pipeline-section {
-            background: rgba(8, 20, 32, 0.8);
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            border: 1px solid rgba(0, 180, 120, 0.2);
-            margin-bottom: 1.5rem;
-        }
-
-        .pipeline-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .pipeline-stages {
+        .stats-row {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-        }
-
-        .pipeline-stage {
-            background: rgba(0,0,0,0.3);
-            border-radius: 1rem;
-            padding: 1.2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.3s;
-            border: 2px solid transparent;
-            position: relative;
-        }
-
-        .pipeline-stage:hover {
-            border-color: var(--accent-green);
-            transform: translateY(-3px);
-        }
-
-        .pipeline-stage.active {
-            border-color: var(--warning);
-            box-shadow: 0 0 20px rgba(255, 165, 0, 0.2);
-        }
-
-        .stage-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .stage-count {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--accent-green);
-        }
-
-        .stage-count.pending {
-            color: var(--warning);
-        }
-
-        .stage-label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-
-        .stage-arrow {
-            position: absolute;
-            right: -15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            z-index: 10;
-        }
-
-        /* METRICS GRID */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1rem;
             margin-bottom: 1.5rem;
         }
 
-        .metric-card {
-            background: rgba(12, 30, 48, 0.8);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 180, 120, 0.2);
-            border-radius: 1.5rem;
-            padding: 1.3rem;
-            transition: all 0.3s;
+        .stat-card {
+            background: var(--navy-panel);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
             cursor: pointer;
-            position: relative;
+            transition: border-color 0.15s ease;
         }
 
-        .metric-card:hover {
-            border-color: var(--accent-green);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 184, 122, 0.2);
+        .stat-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
-        .metric-card.pulse::after {
-            content: '';
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 8px;
-            height: 8px;
-            background: var(--accent-green);
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
-
-        .metric-label {
+        .stat-label {
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: var(--text-secondary);
             margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
-        .metric-value {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff, #c0f0dd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #eef2f7;
+            line-height: 1;
         }
 
-        .metric-change {
-            font-size: 0.8rem;
+        .stat-change {
+            font-size: 0.75rem;
             margin-top: 0.3rem;
         }
 
-        .change-up { color: #00e08a; }
-        .change-down { color: var(--danger); }
+        .change-positive {
+            color: var(--green);
+        }
 
-        /* MAIN DASHBOARD GRID */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
+        .change-warning {
+            color: var(--amber);
         }
 
         .panel {
-            background: rgba(8, 20, 32, 0.8);
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            border: 1px solid rgba(0, 180, 120, 0.2);
+            background: var(--navy-panel);
+            border: 1px solid var(--border);
+            border-radius: 0.85rem;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
         }
 
         .panel-header {
@@ -421,1050 +243,461 @@
         }
 
         .panel-title {
-            font-weight: 600;
-            color: var(--gold);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* PENDING SUBMISSIONS TABLE */
-        .pending-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-        }
-
-        .pending-table th {
-            text-align: left;
-            padding: 0.8rem;
-            background: rgba(0,0,0,0.3);
+            letter-spacing: 1.5px;
             color: var(--text-secondary);
             font-weight: 600;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 0.65rem 0.75rem;
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
         }
 
-        .pending-table td {
-            padding: 0.8rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+        .data-table td {
+            padding: 0.65rem 0.75rem;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
-        .action-btns {
-            display: flex;
-            gap: 0.5rem;
+        .status-dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            margin-right: 0.4rem;
         }
 
-        .btn-sm {
-            padding: 0.4rem 0.8rem;
-            border-radius: 0.5rem;
+        .dot-submitted { background: var(--blue); }
+        .dot-review { background: var(--amber); animation: pulse 2s infinite; }
+        .dot-verified { background: var(--green); }
+        .dot-disputed { background: var(--red); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .btn-xs {
+            padding: 0.3rem 0.7rem;
+            border-radius: 0.35rem;
             font-size: 0.7rem;
             font-weight: 600;
             cursor: pointer;
             border: none;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
+            transition: background 0.12s ease;
         }
 
         .btn-approve {
-            background: var(--accent-green);
-            color: white;
+            background: var(--green);
+            color: #fff;
         }
 
         .btn-approve:hover {
-            background: #00d48f;
+            background: #00955e;
         }
 
-        .btn-reject {
-            background: var(--danger);
-            color: white;
+        .btn-flag {
+            background: transparent;
+            border: 1px solid var(--red);
+            color: var(--red);
         }
 
-        .btn-reject:hover {
-            background: #ff6666;
+        .btn-flag:hover {
+            background: rgba(217, 74, 74, 0.1);
         }
 
-        .btn-review {
-            background: var(--warning);
-            color: #020c17;
+        .btn-review-btn {
+            background: transparent;
+            border: 1px solid var(--amber);
+            color: var(--amber);
         }
 
-        /* LIVE FEED */
-        .live-feed {
-            max-height: 500px;
-            overflow-y: auto;
+        .btn-review-btn:hover {
+            background: rgba(212, 160, 48, 0.1);
         }
 
-        .feed-item {
-            padding: 0.8rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            display: flex;
-            gap: 0.8rem;
-            align-items: flex-start;
-            animation: slideIn 0.3s ease;
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .feed-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-top: 0.3rem;
-            flex-shrink: 0;
-        }
-
-        .feed-dot.submission { background: var(--info); animation: pulse 1.5s infinite; }
-        .feed-dot.approval { background: var(--accent-green); }
-        .feed-dot.dispute { background: var(--danger); animation: pulse 1s infinite; }
-        .feed-dot.declaration { background: var(--gold); }
-
-        .feed-content {
-            flex: 1;
-            font-size: 0.85rem;
-            line-height: 1.4;
-        }
-
-        .feed-time {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            margin-top: 0.2rem;
-        }
-
-        /* STATUS BADGES */
-        .status-badge {
-            padding: 0.2rem 0.7rem;
-            border-radius: 1rem;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-
-        .status-submitted { background: rgba(100, 149, 237, 0.2); color: #6495ED; }
-        .status-review { background: rgba(255, 165, 0, 0.2); color: #ffa500; }
-        .status-verified { background: rgba(0, 184, 122, 0.2); color: #00e08a; }
-        .status-disputed { background: rgba(255, 68, 68, 0.2); color: #ff4444; }
-        .status-archived { background: rgba(128, 128, 128, 0.2); color: #808080; }
-
-        /* MODAL */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-overlay.show {
-            display: flex;
-        }
-
-        .modal {
-            background: rgba(8, 20, 32, 0.98);
-            border-radius: 2rem;
-            padding: 2rem;
-            max-width: 600px;
-            width: 90%;
-            border: 1px solid var(--gold);
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .modal h3 {
-            color: var(--gold);
-            margin-bottom: 1.5rem;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 1200px) {
-            .dashboard-grid {
+        @media (max-width: 1024px) {
+            .grid-2col {
                 grid-template-columns: 1fr;
-            }
-            .pipeline-stages {
-                grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 768px) {
             .sidebar {
-                width: 70px;
+                width: 55px;
             }
             .nav-item span,
-            .sidebar-title {
-                display: none;
-            }
-            .metrics-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .pipeline-stages {
-                grid-template-columns: 1fr;
-            }
-            .nav-stats {
+            .sidebar-label {
                 display: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- TOP NAVIGATION -->
     <nav class="top-nav">
-        <div class="nav-brand">
-              <div class="apc-emblem">
-    <img src="assets/apc2.png" alt="APC Logo" class="apc-logo-img">
-</div>
-            <div class="sentinel-logo">APC<span>.</span></div>
-        </div>
-
-        <div class="nav-stats">
-            <div class="nav-stat" onclick="scrollToPipeline()">
-                <div class="nav-stat-value pending" id="navPendingCount">0</div>
-                <div class="nav-stat-label">Pending Review</div>
-            </div>
-            <div class="nav-stat" onclick="navigateTo('candidates.html')">
-                <div class="nav-stat-value" id="navVerifiedCount">482</div>
-                <div class="nav-stat-label">Verified Winners</div>
-            </div>
-            <div class="nav-stat">
-                <div class="nav-stat-value" id="navTodayCount">0</div>
-                <div class="nav-stat-label">Today's Submissions</div>
-            </div>
-        </div>
-
-        <div class="nav-controls">
-            <span class="role-badge" id="roleBadge">
-                <i class="fas fa-shield-alt"></i> <span id="roleText">Loading...</span>
-            </span>
-            <div class="live-badge">
-                <i class="fas fa-broadcast-tower"></i> LIVE
-            </div>
-            <span id="liveClock" style="font-weight:600; font-size:0.9rem;"></span>
-            <div class="user-menu" onclick="navigateTo('profile.html')">
-                <span style="font-size:0.85rem;" id="userName">Admin</span>
-                <div class="user-avatar">
-                    <i class="fas fa-user-shield"></i>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- MAIN LAYOUT -->
+    <!-- Left: Brand -->
+    <div class="nav-brand">
+        <img src="assets/apc2.png" alt="APC" class="nav-logo-img" onerror="this.style.display='none'">
+        <span class="nav-logo-text">APC<span>.</span></span>
+    </div>
+    
+    <!-- Center: Hamburger (mobile only) -->
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Right: Status items -->
+    <div class="nav-status">
+        <span class="nav-pill nav-pill-live">
+            <span class="pulse-dot"></span> Live
+        </span>
+        <span class="nav-pill nav-pill-role" id="roleBadge">
+            <i class="fas fa-shield-alt"></i> Admin
+        </span>
+        <span class="nav-time" id="liveClock">--:--:--</span>
+    </div>
+</nav>
     <div class="main-layout">
-        <!-- SIDEBAR -->
         <aside class="sidebar">
-            <div class="sidebar-section">
-                <div class="sidebar-title">Command Center</div>
-                <button class="nav-item active">
-                    <i class="fas fa-th-large"></i> <span>Command Dashboard</span>
-                    <span class="nav-badge">LIVE</span>
-                </button>
-            </div>
-
-            <div class="sidebar-section">
-                <div class="sidebar-title">Verification Pipeline</div>
-                <button class="nav-item" onclick="scrollToPipeline()">
-                    <i class="fas fa-inbox"></i> <span>Pending Submissions</span>
-                    <span class="nav-badge warning" id="sidebarPendingBadge">0</span>
-                </button>
-                <button class="nav-item" onclick="navigateTo('field-submission.html')">
-                    <i class="fas fa-plus-circle"></i> <span>New Submission</span>
-                </button>
-            </div>
-
-            <div class="sidebar-section">
-                <div class="sidebar-title">Primary Elections</div>
-                <button class="nav-item" onclick="navigateTo('primaries.html')">
-                    <i class="fas fa-vote-yea"></i> <span>Election Center</span>
-                </button>
-                <button class="nav-item" onclick="navigateTo('accreditation.html')">
-                    <i class="fas fa-id-card"></i> <span>Accreditation</span>
-                </button>
-                <button class="nav-item" onclick="navigateTo('delegate-vote.html')">
-                    <i class="fas fa-check-circle"></i> <span>Voting Portal</span>
-                </button>
-                <button class="nav-item" onclick="navigateTo('collation.html')">
-                    <i class="fas fa-calculator"></i> <span>Collation Center</span>
-                </button>
-            </div>
-
-            <div class="sidebar-section">
-                <div class="sidebar-title">Intelligence</div>
-                <button class="nav-item" onclick="navigateTo('candidates.html')">
-                    <i class="fas fa-database"></i> <span>Winner Registry</span>
-                </button>
-                <button class="nav-item" onclick="navigateTo('analytics.html')">
-                    <i class="fas fa-chart-pie"></i> <span>Analytics</span>
-                </button>
-                <button class="nav-item" onclick="navigateTo('profile.html')">
-                    <i class="fas fa-user"></i> <span>Profiles</span>
-                </button>
-            </div>
-
-            <div class="sidebar-section">
-                <div class="sidebar-title">Administration</div>
-                <button class="nav-item" onclick="navigateTo('admin.html')">
-                    <i class="fas fa-cog"></i> <span>Admin Panel</span>
-                </button>
-                <button class="nav-item" onclick="handleLogout()">
-                    <i class="fas fa-sign-out-alt"></i> <span>Secure Logout</span>
-                </button>
-            </div>
+            <div class="sidebar-label">Platform</div>
+            <button class="nav-item active">
+                <i class="fas fa-compass"></i> <span>Command Center</span>
+            </button>
+            <button class="nav-item" onclick="navigateTo('candidates.html')">
+                <i class="fas fa-database"></i> <span>Winner Registry</span>
+            </button>
+            <button class="nav-item" onclick="navigateTo('analytics.html')">
+                <i class="fas fa-chart-bar"></i> <span>Analytics</span>
+            </button>
+            
+            <div class="sidebar-label">Operations</div>
+            <button class="nav-item" onclick="navigateTo('field-submission.html')">
+                <i class="fas fa-file-import"></i> <span>New Submission</span>
+            </button>
+            <button class="nav-item" onclick="scrollToPending()">
+                <i class="fas fa-inbox"></i> <span>Pending Review</span>
+                <span class="nav-badge-count" id="pendingCount">0</span>
+            </button>
+            
+            <div class="sidebar-label">Elections</div>
+            <button class="nav-item" onclick="navigateTo('primaries.html')">
+                <i class="fas fa-vote-yea"></i> <span>Primary Elections</span>
+            </button>
+            <button class="nav-item" onclick="navigateTo('collation.html')">
+                <i class="fas fa-calculator"></i> <span>Collation</span>
+            </button>
+            
+            <div class="sidebar-label">System</div>
+            <button class="nav-item" onclick="navigateTo('admin.html')">
+                <i class="fas fa-shield-alt"></i> <span>Administration</span>
+            </button>
+            <button class="nav-item" onclick="navigateTo('profile.html')">
+                <i class="fas fa-user"></i> <span>Profile</span>
+            </button>
+            <button class="nav-item" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> <span>Sign Out</span>
+            </button>
         </aside>
 
-        <!-- CONTENT AREA -->
         <main class="content-area">
-            <!-- VERIFICATION PIPELINE -->
-            <div class="pipeline-section" id="pipelineSection">
-                <div class="pipeline-title">
-                    <h3 style="color: var(--gold);">
-                        <i class="fas fa-project-diagram"></i> VERIFICATION PIPELINE
-                    </h3>
-                    <button class="btn-sm btn-review" onclick="refreshPipeline()">
-                        <i class="fas fa-sync-alt"></i> Refresh
-                    </button>
+            <!-- Stats -->
+            <div class="stats-row">
+                <div class="stat-card" onclick="navigateTo('primaries.html')">
+                    <div class="stat-label">Active Primaries</div>
+                    <div class="stat-value">4</div>
+                    <div class="stat-change change-positive">All offices live</div>
                 </div>
-                <div class="pipeline-stages">
-                    <div class="pipeline-stage active" onclick="filterByStatus('submitted')">
-                        <div class="stage-icon">📝</div>
-                        <div class="stage-count pending" id="stageSubmitted">0</div>
-                        <div class="stage-label">Submitted</div>
-                        <div style="font-size:0.7rem; color: var(--text-secondary);">Awaiting Review</div>
-                        <span class="stage-arrow">→</span>
-                    </div>
-                    <div class="pipeline-stage" onclick="filterByStatus('under_review')">
-                        <div class="stage-icon">🔍</div>
-                        <div class="stage-count pending" id="stageUnderReview">0</div>
-                        <div class="stage-label">Under Verification</div>
-                        <div style="font-size:0.7rem; color: var(--text-secondary);">Cross-checking</div>
-                        <span class="stage-arrow">→</span>
-                    </div>
-                    <div class="pipeline-stage" onclick="filterByStatus('verified')">
-                        <div class="stage-icon">✅</div>
-                        <div class="stage-count" id="stageVerified">0</div>
-                        <div class="stage-label">Verified</div>
-                        <div style="font-size:0.7rem; color: var(--text-secondary);">Approved</div>
-                        <span class="stage-arrow">→</span>
-                    </div>
-                    <div class="pipeline-stage" onclick="filterByStatus('disputed')">
-                        <div class="stage-icon">⚠️</div>
-                        <div class="stage-count" id="stageDisputed" style="color: var(--danger);">0</div>
-                        <div class="stage-label">Disputed</div>
-                        <div style="font-size:0.7rem; color: var(--text-secondary);">Under Appeal</div>
-                    </div>
+                <div class="stat-card" onclick="scrollToPending()">
+                    <div class="stat-label">Pending Verifications</div>
+                    <div class="stat-value" id="metricPending" style="color: var(--amber);">-</div>
+                    <div class="stat-change change-warning">Requires attention</div>
+                </div>
+                <div class="stat-card" onclick="navigateTo('candidates.html')">
+                    <div class="stat-label">Verified Winners</div>
+                    <div class="stat-value" id="metricVerified">482</div>
+                    <div class="stat-change change-positive">↑ 24 today</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Disputes</div>
+                    <div class="stat-value" style="color: var(--amber);">12</div>
+                    <div class="stat-change">3 resolved</div>
                 </div>
             </div>
 
-            <!-- METRICS -->
-            <div class="metrics-grid">
-                <div class="metric-card pulse" onclick="navigateTo('primaries.html')">
-                    <div class="metric-label">Active Primaries</div>
-                    <div class="metric-value">4</div>
-                    <div class="metric-change change-up">↑ All Offices Live</div>
-                </div>
-                <div class="metric-card" onclick="scrollToPipeline()">
-                    <div class="metric-label">Pending Verifications</div>
-                    <div class="metric-value" id="metricPending" style="color: #ffa500;">0</div>
-                    <div class="metric-change">Requires attention</div>
-                </div>
-                <div class="metric-card" onclick="navigateTo('candidates.html')">
-                    <div class="metric-label">Total Verified Winners</div>
-                    <div class="metric-value" id="metricTotalVerified">482</div>
-                    <div class="metric-change change-up">↑ +24 today</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">Field Submissions Today</div>
-                    <div class="metric-value" id="metricTodaySubmissions">0</div>
-                    <div class="metric-change change-up">↑ Real-time</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">Disputes</div>
-                    <div class="metric-value" style="color: #ffa500;">12</div>
-                    <div class="metric-change change-down">↓ 3 resolved</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">Archived Records</div>
-                    <div class="metric-value">1,247</div>
-                    <div class="metric-change">Complete</div>
-                </div>
-            </div>
-
-            <!-- PENDING SUBMISSIONS & LIVE FEED -->
-            <div class="dashboard-grid">
+            <!-- Pending Submissions + Activity -->
+            <div class="grid-2col" id="pendingSection">
                 <div class="panel">
                     <div class="panel-header">
-                        <span class="panel-title">
-                            <i class="fas fa-inbox"></i> PENDING SUBMISSIONS QUEUE
-                        </span>
-                        <div>
-                            <select id="statusFilter" onchange="renderPendingSubmissions()" style="background:rgba(15,35,55,0.8); border:1px solid rgba(0,180,120,0.25); border-radius:0.5rem; padding:0.4rem 0.8rem; color:var(--text-primary); font-size:0.8rem; margin-right:0.5rem;">
-                                <option value="all">All Status</option>
-                                <option value="submitted">Submitted</option>
-                                <option value="under_review">Under Review</option>
-                                <option value="verified">Verified</option>
-                                <option value="disputed">Disputed</option>
-                            </select>
-                            <button class="btn-sm btn-approve" onclick="approveAll()">
-                                <i class="fas fa-check-double"></i> Approve All
-                            </button>
-                        </div>
+                        <span class="panel-title">Pending Submissions</span>
+                        <select id="statusFilter" onchange="renderSubmissions()" style="background:rgba(20,40,60,0.6);border:1px solid var(--border);border-radius:0.4rem;padding:0.35rem 0.6rem;color:var(--text-primary);font-size:0.75rem;">
+                            <option value="all">All</option>
+                            <option value="submitted">Submitted</option>
+                            <option value="under_review">Under Review</option>
+                            <option value="disputed">Disputed</option>
+                        </select>
                     </div>
-                    <div style="overflow-x: auto;">
-                        <table class="pending-table">
-                            <thead>
-                                <tr>
-                                    <th>Candidate</th>
-                                    <th>Office</th>
-                                    <th>State</th>
-                                    <th>Votes</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="pendingTableBody">
-                                <tr>
-                                    <td colspan="6" style="text-align:center; padding:2rem; color: var(--text-secondary);">
-                                        <i class="fas fa-inbox" style="font-size:2rem; margin-bottom:0.5rem;"></i>
-                                        <p>No pending submissions</p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Candidate</th>
+                                <th>Office</th>
+                                <th>State</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="submissionsTable"></tbody>
+                    </table>
                 </div>
 
                 <div class="panel">
                     <div class="panel-header">
-                        <span class="panel-title">
-                            <i class="fas fa-satellite-dish"></i> Live Intelligence Feed
-                        </span>
-                        <span class="nav-badge">LIVE</span>
+                        <span class="panel-title">Recent Activity</span>
+                        <span style="font-size:0.65rem;color:var(--green);">● Live</span>
                     </div>
-                    <div class="live-feed" id="liveFeed">
-                        <div class="feed-item">
-                            <div class="feed-dot submission"></div>
-                            <div class="feed-content">
-                                <div>📝 <strong>New Submission:</strong> Hon. Musa Ibrahim - Senate, Kano Central (1,248 votes)</div>
-                                <div class="feed-time">Just now - Awaiting verification</div>
-                            </div>
-                        </div>
-                        <div class="feed-item">
-                            <div class="feed-dot approval"></div>
-                            <div class="feed-content">
-                                <div>✅ <strong>Verified:</strong> Dr. Chidi Okonkwo approved as APC Governorship candidate, Enugu</div>
-                                <div class="feed-time">5 mins ago - National Admin</div>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="activityFeed" style="max-height:400px;overflow-y:auto;"></div>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- DETAIL MODAL -->
-    <div class="modal-overlay" id="detailModal">
-        <div class="modal" id="modalContent"></div>
-    </div>
-
     <script>
-        // ============ DATA MANAGEMENT ============
-        
-        // Get submissions from field reporters (stored in localStorage for demo)
-        function getAllSubmissions() {
+        // Data Management
+        function getSubmissions() {
             return JSON.parse(localStorage.getItem('sentinel_submissions') || '[]');
         }
 
-        function saveAllSubmissions(submissions) {
-            localStorage.setItem('sentinel_submissions', JSON.stringify(submissions));
+        function saveSubmissions(data) {
+            localStorage.setItem('sentinel_submissions', JSON.stringify(data));
         }
 
-        // Get verified winners
-        function getVerifiedWinners() {
+        function getWinners() {
             return JSON.parse(localStorage.getItem('sentinel_winners') || '[]');
         }
 
-        function saveVerifiedWinners(winners) {
-            localStorage.setItem('sentinel_winners', JSON.stringify(winners));
+        function saveWinners(data) {
+            localStorage.setItem('sentinel_winners', JSON.stringify(data));
         }
 
-        // Get activity log
-        function getActivityLog() {
-            return JSON.parse(localStorage.getItem('sentinel_activity') || '[]');
-        }
-
-        function addActivityLog(activity) {
-            const log = getActivityLog();
-            log.unshift({
-                ...activity,
-                timestamp: new Date().toISOString(),
-                id: Date.now()
-            });
-            if (log.length > 50) log.pop();
-            localStorage.setItem('sentinel_activity', JSON.stringify(log));
-        }
-
-        // ============ INITIALIZATION ============
-        
-        function initializeData() {
-            // Check if data exists, if not, seed with sample data
+        function seedData() {
             if (!localStorage.getItem('sentinel_submissions')) {
-                const sampleSubmissions = [
-                    {
-                        id: 'SUB-001',
-                        candidateName: 'Hon. Musa Ibrahim',
-                        office: 'Senate',
-                        state: 'Kano',
-                        constituency: 'Kano Central',
-                        votes: 1248,
-                        dateDeclared: '2026-05-07',
-                        venue: 'APC State Secretariat, Kano',
-                        returningOfficer: 'Barr. Ahmad Tijjani',
-                        submittedBy: 'Field Reporter - Kano',
-                        submissionTime: new Date(Date.now() - 3600000).toISOString(),
-                        status: 'submitted',
-                        documents: ['result_sheet.pdf']
-                    },
-                    {
-                        id: 'SUB-002',
-                        candidateName: 'Fatima Bello',
-                        office: 'House of Representatives',
-                        state: 'Kaduna',
-                        constituency: 'Kaduna North',
-                        votes: 876,
-                        dateDeclared: '2026-05-06',
-                        venue: 'APC Zonal Office',
-                        returningOfficer: 'Alh. Sani Usman',
-                        submittedBy: 'Field Reporter - Kaduna',
-                        submissionTime: new Date(Date.now() - 7200000).toISOString(),
-                        status: 'under_review',
-                        documents: ['declaration_form.pdf']
-                    },
-                    {
-                        id: 'SUB-003',
-                        candidateName: 'Dr. Chidi Okonkwo',
-                        office: 'Governor',
-                        state: 'Enugu',
-                        constituency: 'Statewide',
-                        votes: 2103,
-                        dateDeclared: '2026-05-05',
-                        venue: 'APC State Congress',
-                        returningOfficer: 'Chief Emeka Nwodo',
-                        submittedBy: 'Field Reporter - Enugu',
-                        submissionTime: new Date(Date.now() - 10800000).toISOString(),
-                        status: 'verified',
-                        documents: ['results.pdf', 'photos.zip']
-                    },
-                    {
-                        id: 'SUB-004',
-                        candidateName: 'Ngozi Adeola',
-                        office: 'House of Representatives',
-                        state: 'Ogun',
-                        constituency: 'Ogun West',
-                        votes: 543,
-                        dateDeclared: '2026-05-05',
-                        venue: 'APC Secretariat, Abeokuta',
-                        returningOfficer: 'Mrs. Funke Akinde',
-                        submittedBy: 'Field Reporter - Ogun',
-                        submissionTime: new Date(Date.now() - 14400000).toISOString(),
-                        status: 'disputed',
-                        documents: ['petition.pdf']
-                    }
+                const samples = [
+                    { id: 'SUB-001', candidateName: 'Hon. Musa Ibrahim', office: 'Senate', state: 'Kano', votes: 1248, status: 'submitted', submittedAt: new Date().toISOString() },
+                    { id: 'SUB-002', candidateName: 'Fatima Bello', office: 'House of Reps', state: 'Kaduna', votes: 876, status: 'under_review', submittedAt: new Date(Date.now()-7200000).toISOString() },
+                    { id: 'SUB-003', candidateName: 'Dr. Chidi Okonkwo', office: 'Governor', state: 'Enugu', votes: 2103, status: 'verified', submittedAt: new Date(Date.now()-10800000).toISOString() },
+                    { id: 'SUB-004', candidateName: 'Ngozi Adeola', office: 'House of Reps', state: 'Ogun', votes: 543, status: 'disputed', submittedAt: new Date(Date.now()-14400000).toISOString() }
                 ];
-                saveAllSubmissions(sampleSubmissions);
+                saveSubmissions(samples);
             }
-
             if (!localStorage.getItem('sentinel_winners')) {
-                const verifiedWinners = [
-                    { id: 'WIN-001', name: 'Dr. Chidi Okonkwo', office: 'Governor', state: 'Enugu', votes: 2103, verifiedAt: new Date().toISOString(), verifiedBy: 'National Admin' },
-                    { id: 'WIN-002', name: 'Kashim Ibrahim', office: 'Senate', state: 'Borno', votes: 987, verifiedAt: new Date().toISOString(), verifiedBy: 'National Admin' }
-                ];
-                saveVerifiedWinners(verifiedWinners);
+                saveWinners([{ id: 'WIN-001', name: 'Dr. Chidi Okonkwo', office: 'Governor', state: 'Enugu', votes: 2103 }]);
             }
         }
 
-        // ============ USER ROLE MANAGEMENT ============
-        
-        function getCurrentUser() {
-            const userData = sessionStorage.getItem('sentinel_user');
-            if (userData) {
-                try {
-                    return JSON.parse(userData);
-                } catch(e) {}
-            }
-            // Default user for demo
-            return {
-                name: 'Admin User',
-                role: 'national_admin',
-                clearance: 'Level 5',
-                state: null
-            };
-        }
+        // Update clock in top nav
+function updateClock() {
+    const clockEl = document.getElementById('liveClock');
+    if (clockEl) {
+        const now = new Date();
+        const options = {
+            timeZone: 'Africa/Lagos',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        };
+        clockEl.textContent = now.toLocaleTimeString('en-NG', options) + ' WAT';
+    }
 
-        function getUserRole() {
-            const user = getCurrentUser();
-            return user.role || 'national_admin';
+    // Also update role badge
+    const roleEl = document.getElementById('roleText');
+    if (roleEl && roleEl.textContent === 'Loading...') {
+        const user = JSON.parse(sessionStorage.getItem('sentinel_user') || '{}');
+        if (user.role) {
+            roleEl.textContent = user.role.replace(/_/g, ' ').toUpperCase();
         }
+    }
+}
 
-        function canApprove() {
-            const role = getUserRole();
-            return ['super_admin', 'national_admin', 'national_editor', 'state_coordinator'].includes(role);
-        }
-
-        function canSubmit() {
-            const role = getUserRole();
-            return ['super_admin', 'national_admin', 'national_editor', 'state_coordinator', 'field_reporter'].includes(role);
-        }
-
-        // ============ DASHBOARD UPDATES ============
-        
-        function updateAllCounts() {
-            const submissions = getAllSubmissions();
-            const verifiedWinners = getVerifiedWinners();
-            
-            // Pipeline counts
-            const submitted = submissions.filter(s => s.status === 'submitted').length;
-            const underReview = submissions.filter(s => s.status === 'under_review').length;
-            const verified = submissions.filter(s => s.status === 'verified').length;
-            const disputed = submissions.filter(s => s.status === 'disputed').length;
-            
-            // Update pipeline stages
-            document.getElementById('stageSubmitted').textContent = submitted;
-            document.getElementById('stageUnderReview').textContent = underReview;
-            document.getElementById('stageVerified').textContent = verified + getVerifiedWinners().length;
-            document.getElementById('stageDisputed').textContent = disputed;
-            
-            // Update nav badges
-            document.getElementById('navPendingCount').textContent = submitted + underReview;
-            document.getElementById('navVerifiedCount').textContent = verified + verifiedWinners.length;
-            document.getElementById('sidebarPendingBadge').textContent = submitted + underReview;
-            
-            // Update metrics
-            document.getElementById('metricPending').textContent = submitted + underReview;
-            document.getElementById('metricTotalVerified').textContent = verified + verifiedWinners.length;
-            
-            // Today's submissions
-            const today = new Date().toDateString();
-            const todaySubmissions = submissions.filter(s => {
-                return new Date(s.submissionTime).toDateString() === today;
-            });
-            document.getElementById('navTodayCount').textContent = todaySubmissions.length;
-            document.getElementById('metricTodaySubmissions').textContent = todaySubmissions.length;
-            
-            // Update user info
-            const user = getCurrentUser();
-            document.getElementById('userName').textContent = user.name || 'Admin';
-            document.getElementById('roleText').textContent = user.role ? user.role.replace('_', ' ').toUpperCase() : 'ADMIN';
-        }
-
-        // ============ RENDER PENDING SUBMISSIONS ============
-        
-        function renderPendingSubmissions() {
-            const submissions = getAllSubmissions();
+// Run immediately and then every second
+updateClock();
+setInterval(updateClock, 1000);
+        function renderSubmissions() {
+            const subs = getSubmissions();
             const filter = document.getElementById('statusFilter')?.value || 'all';
-            const tbody = document.getElementById('pendingTableBody');
-            
-            let filteredSubmissions = submissions;
-            if (filter !== 'all') {
-                filteredSubmissions = submissions.filter(s => s.status === filter);
-            }
-            
-            if (filteredSubmissions.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="6" style="text-align:center; padding:2rem; color: var(--text-secondary);">
-                            <i class="fas fa-inbox" style="font-size:2rem; display:block; margin-bottom:0.5rem;"></i>
-                            <p>No submissions found</p>
-                        </td>
-                    </tr>
-                `;
+            const filtered = filter === 'all' ? subs : subs.filter(s => s.status === filter);
+            const tbody = document.getElementById('submissionsTable');
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-secondary);">No submissions</td></tr>';
                 return;
             }
-            
-            tbody.innerHTML = filteredSubmissions.map(sub => {
-                const statusClass = `status-${sub.status}`;
-                const statusLabels = {
-                    'submitted': 'Submitted',
-                    'under_review': 'Under Review',
-                    'verified': 'Verified',
-                    'disputed': 'Disputed',
-                    'archived': 'Archived'
-                };
-                
-                const canAct = canApprove() && (sub.status === 'submitted' || sub.status === 'under_review');
-                
+
+            tbody.innerHTML = filtered.map(s => {
+                const statusLabels = { submitted: 'Submitted', under_review: 'Under Review', verified: 'Verified', disputed: 'Disputed' };
+                const dotClass = `dot-${s.status}`;
                 return `
                     <tr>
-                        <td><strong>${sub.candidateName}</strong></td>
-                        <td>${sub.office}</td>
-                        <td>${sub.state}</td>
-                        <td><strong>${parseInt(sub.votes).toLocaleString()}</strong></td>
-                        <td><span class="status-badge ${statusClass}">${statusLabels[sub.status] || sub.status}</span></td>
+                        <td><strong>${s.candidateName}</strong></td>
+                        <td>${s.office}</td>
+                        <td>${s.state}</td>
+                        <td><span class="status-dot ${dotClass}"></span>${statusLabels[s.status] || s.status}</td>
                         <td>
-                            <div class="action-btns">
-                                ${canAct ? `
-                                    <button class="btn-sm btn-approve" onclick="verifySubmission('${sub.id}')" title="Approve">
-                                        <i class="fas fa-check"></i>
-                                    </button>
-                                    <button class="btn-sm btn-review" onclick="reviewSubmission('${sub.id}')" title="Move to Review">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                    <button class="btn-sm btn-reject" onclick="disputeSubmission('${sub.id}')" title="Flag Dispute">
-                                        <i class="fas fa-flag"></i>
-                                    </button>
-                                ` : `
-                                    <button class="btn-sm btn-review" onclick="viewSubmission('${sub.id}')" title="View Details">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                `}
-                            </div>
+                            ${s.status === 'submitted' ? `<button class="btn-xs btn-approve" onclick="verifySubmission('${s.id}')">Approve</button>` : ''}
+                            ${s.status === 'under_review' ? `<button class="btn-xs btn-approve" onclick="verifySubmission('${s.id}')">Approve</button>` : ''}
+                            <button class="btn-xs btn-flag" onclick="flagDispute('${s.id}')">Flag</button>
                         </td>
                     </tr>
                 `;
             }).join('');
         }
 
-        // ============ VERIFICATION ACTIONS ============
-        
-        function verifySubmission(submissionId) {
-            const submissions = getAllSubmissions();
-            const index = submissions.findIndex(s => s.id === submissionId);
-            
-            if (index !== -1) {
-                const user = getCurrentUser();
-                submissions[index].status = 'verified';
-                submissions[index].verifiedBy = user.name;
-                submissions[index].verifiedAt = new Date().toISOString();
-                saveAllSubmissions(submissions);
-                
-                // Add to verified winners
-                const winners = getVerifiedWinners();
-                winners.unshift({
-                    id: 'WIN-' + Date.now(),
-                    name: submissions[index].candidateName,
-                    office: submissions[index].office,
-                    state: submissions[index].state,
-                    votes: submissions[index].votes,
-                    verifiedAt: new Date().toISOString(),
-                    verifiedBy: user.name
-                });
-                saveVerifiedWinners(winners);
-                
-                // Log activity
-                addActivityLog({
-                    type: 'verification',
-                    action: 'Verified',
-                    candidate: submissions[index].candidateName,
-                    by: user.name,
-                    role: user.role
-                });
-                
-                // Add to live feed
-                addToLiveFeed('approval', `${submissions[index].candidateName} verified as APC ${submissions[index].office} candidate, ${submissions[index].state}`);
-                
-                updateAllCounts();
-                renderPendingSubmissions();
-                renderLiveFeed();
-                
-                showToast('✅ Submission verified successfully!');
+        function verifySubmission(id) {
+            const subs = getSubmissions();
+            const idx = subs.findIndex(s => s.id === id);
+            if (idx !== -1) {
+                subs[idx].status = 'verified';
+                subs[idx].verifiedAt = new Date().toISOString();
+                saveSubmissions(subs);
+
+                const winners = getWinners();
+                winners.unshift({ id: 'WIN-' + Date.now(), name: subs[idx].candidateName, office: subs[idx].office, state: subs[idx].state, votes: subs[idx].votes });
+                saveWinners(winners);
+
+                updateAll();
+                showToast('Submission verified');
             }
         }
 
-        function reviewSubmission(submissionId) {
-            const submissions = getAllSubmissions();
-            const index = submissions.findIndex(s => s.id === submissionId);
-            
-            if (index !== -1) {
-                submissions[index].status = 'under_review';
-                saveAllSubmissions(submissions);
-                
-                addActivityLog({
-                    type: 'review',
-                    action: 'Under Review',
-                    candidate: submissions[index].candidateName,
-                    by: getCurrentUser().name
-                });
-                
-                updateAllCounts();
-                renderPendingSubmissions();
-                showToast('🔍 Submission moved to review');
-            }
-        }
-
-        function disputeSubmission(submissionId) {
-            const reason = prompt('Please provide reason for dispute:');
+        function flagDispute(id) {
+            const reason = prompt('Reason for dispute:');
             if (!reason) return;
-            
-            const submissions = getAllSubmissions();
-            const index = submissions.findIndex(s => s.id === submissionId);
-            
-            if (index !== -1) {
-                submissions[index].status = 'disputed';
-                submissions[index].disputeReason = reason;
-                submissions[index].disputedBy = getCurrentUser().name;
-                submissions[index].disputedAt = new Date().toISOString();
-                saveAllSubmissions(submissions);
-                
-                addActivityLog({
-                    type: 'dispute',
-                    action: 'Disputed',
-                    candidate: submissions[index].candidateName,
-                    reason: reason,
-                    by: getCurrentUser().name
-                });
-                
-                addToLiveFeed('dispute', `⚠️ Dispute filed: ${submissions[index].candidateName} - ${reason}`);
-                
-                updateAllCounts();
-                renderPendingSubmissions();
-                renderLiveFeed();
-                showToast('⚠️ Submission flagged as disputed');
+            const subs = getSubmissions();
+            const idx = subs.findIndex(s => s.id === id);
+            if (idx !== -1) {
+                subs[idx].status = 'disputed';
+                subs[idx].disputeReason = reason;
+                saveSubmissions(subs);
+                updateAll();
+                showToast('Submission flagged as disputed');
             }
         }
 
-        function viewSubmission(submissionId) {
-            const submissions = getAllSubmissions();
-            const sub = submissions.find(s => s.id === submissionId);
-            
-            if (sub) {
-                const modal = document.getElementById('detailModal');
-                const content = document.getElementById('modalContent');
-                
-                content.innerHTML = `
-                    <h3><i class="fas fa-file-alt"></i> Submission Details</h3>
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-                        <div><strong>Candidate:</strong> ${sub.candidateName}</div>
-                        <div><strong>Office:</strong> ${sub.office}</div>
-                        <div><strong>State:</strong> ${sub.state}</div>
-                        <div><strong>Constituency:</strong> ${sub.constituency}</div>
-                        <div><strong>Votes:</strong> ${parseInt(sub.votes).toLocaleString()}</div>
-                        <div><strong>Date:</strong> ${sub.dateDeclared}</div>
-                        <div><strong>Venue:</strong> ${sub.venue}</div>
-                        <div><strong>Returning Officer:</strong> ${sub.returningOfficer}</div>
-                        <div><strong>Submitted By:</strong> ${sub.submittedBy}</div>
-                        <div><strong>Status:</strong> <span class="status-badge status-${sub.status}">${sub.status}</span></div>
-                        <div><strong>Submission ID:</strong> ${sub.id}</div>
-                    </div>
-                    ${sub.disputeReason ? `<div style="margin-top:1rem; padding:1rem; background:rgba(255,68,68,0.1); border-radius:0.5rem;"><strong>Dispute Reason:</strong> ${sub.disputeReason}</div>` : ''}
-                    <div style="margin-top:1.5rem; display:flex; gap:0.5rem; justify-content:flex-end;">
-                        <button class="btn-sm btn-review" onclick="closeModal()">Close</button>
-                        ${canApprove() && (sub.status === 'submitted' || sub.status === 'under_review') ? `
-                            <button class="btn-sm btn-approve" onclick="verifySubmission('${sub.id}'); closeModal();">Approve</button>
-                        ` : ''}
-                    </div>
-                `;
-                
-                modal.classList.add('show');
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('detailModal').classList.remove('show');
-        }
-
-        function approveAll() {
-            if (!canApprove()) {
-                alert('⛔ You do not have permission to approve submissions.');
-                return;
-            }
-            
-            if (!confirm('Are you sure you want to approve ALL pending submissions?')) return;
-            
-            const submissions = getAllSubmissions();
-            const user = getCurrentUser();
-            let count = 0;
-            
-            submissions.forEach(sub => {
-                if (sub.status === 'submitted' || sub.status === 'under_review') {
-                    sub.status = 'verified';
-                    sub.verifiedBy = user.name;
-                    sub.verifiedAt = new Date().toISOString();
-                    count++;
-                    
-                    // Add to winners
-                    const winners = getVerifiedWinners();
-                    winners.unshift({
-                        id: 'WIN-' + Date.now() + Math.random(),
-                        name: sub.candidateName,
-                        office: sub.office,
-                        state: sub.state,
-                        votes: sub.votes,
-                        verifiedAt: new Date().toISOString(),
-                        verifiedBy: user.name
-                    });
-                    saveVerifiedWinners(winners);
-                }
-            });
-            
-            saveAllSubmissions(submissions);
-            addActivityLog({ type: 'bulk_approve', action: 'Bulk Approved', count: count, by: user.name });
-            
-            updateAllCounts();
-            renderPendingSubmissions();
-            renderLiveFeed();
-            showToast(`✅ ${count} submissions approved!`);
-        }
-
-        // ============ LIVE FEED ============
-        
-        function addToLiveFeed(type, message) {
-            const feedData = JSON.parse(sessionStorage.getItem('sentinel_feed') || '[]');
-            feedData.unshift({ type, message, time: new Date().toISOString() });
-            if (feedData.length > 20) feedData.pop();
-            sessionStorage.setItem('sentinel_feed', JSON.stringify(feedData));
-        }
-
-        function renderLiveFeed() {
-            const feedData = JSON.parse(sessionStorage.getItem('sentinel_feed') || '[]');
-            const feedContainer = document.getElementById('liveFeed');
-            
-            if (feedData.length === 0) {
-                // Load default feed
-                const defaultFeed = [
-                    { type: 'submission', message: '📝 New Submission: Hon. Musa Ibrahim - Senate, Kano Central (1,248 votes)', time: new Date().toISOString() },
-                    { type: 'approval', message: '✅ Verified: Dr. Chidi Okonkwo - APC Governorship, Enugu', time: new Date(Date.now() - 300000).toISOString() },
-                    { type: 'submission', message: '📝 New Submission: Fatima Bello - House of Reps, Kaduna North (876 votes)', time: new Date(Date.now() - 7200000).toISOString() },
-                    { type: 'dispute', message: '⚠️ Dispute filed: Ngozi Adeola - Ogun West (543 votes)', time: new Date(Date.now() - 14400000).toISOString() },
-                    { type: 'declaration', message: '🏆 Winner Declared: Kashim Ibrahim - APC Senate, Borno Central', time: new Date(Date.now() - 28800000).toISOString() }
-                ];
-                sessionStorage.setItem('sentinel_feed', JSON.stringify(defaultFeed));
-                renderLiveFeed();
-                return;
-            }
-            
-            feedContainer.innerHTML = feedData.slice(0, 10).map(item => {
-                const timeAgo = getTimeAgo(new Date(item.time));
-                return `
-                    <div class="feed-item">
-                        <div class="feed-dot ${item.type}"></div>
-                        <div class="feed-content">
-                            <div>${item.message}</div>
-                            <div class="feed-time">${timeAgo}</div>
-                        </div>
-                    </div>
-                `;
+        function renderActivity() {
+            const subs = getSubmissions().slice(0, 8);
+            const feed = document.getElementById('activityFeed');
+            feed.innerHTML = subs.map(s => {
+                const time = new Date(s.submittedAt).toLocaleTimeString('en-NG', { hour: '2-digit', minute: '2-digit' });
+                return `<div style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.82rem;">
+                    <strong>${s.candidateName}</strong> · ${s.office}, ${s.state} · <span style="color:var(--text-secondary);">${time}</span>
+                    <span style="float:right;color:${s.status==='verified'?'var(--green)':s.status==='disputed'?'var(--red)':'var(--amber)'}">${s.status}</span>
+                </div>`;
             }).join('');
         }
 
-        // ============ UTILITIES ============
-        
-        function getTimeAgo(date) {
-            const seconds = Math.floor((new Date() - date) / 1000);
-            if (seconds < 60) return 'Just now';
-            if (seconds < 3600) return `${Math.floor(seconds / 60)} mins ago`;
-            if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours ago`;
-            return date.toLocaleDateString();
+        function updateAll() {
+            const subs = getSubmissions();
+            const pending = subs.filter(s => s.status === 'submitted' || s.status === 'under_review').length;
+            const verified = getWinners().length;
+
+            document.getElementById('pendingCount').textContent = pending;
+            document.getElementById('metricPending').textContent = pending;
+            document.getElementById('metricVerified').textContent = verified;
+            renderSubmissions();
+            renderActivity();
         }
 
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed;
-                bottom: 2rem;
-                right: 2rem;
-                background: rgba(0,184,122,0.9);
-                color: white;
-                padding: 1rem 2rem;
-                border-radius: 1rem;
-                font-weight: 600;
-                z-index: 3000;
-                animation: slideIn 0.3s ease;
-            `;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
+        function showToast(msg) {
+            const t = document.createElement('div');
+            t.style.cssText = 'position:fixed;bottom:1.5rem;right:1.5rem;background:rgba(0,168,107,0.9);color:#fff;padding:0.75rem 1.5rem;border-radius:0.5rem;font-weight:600;z-index:999;font-size:0.85rem;';
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 2500);
         }
 
-        function scrollToPipeline() {
-            document.getElementById('pipelineSection').scrollIntoView({ behavior: 'smooth' });
+        function scrollToPending() {
+            document.getElementById('pendingSection').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function refreshPipeline() {
-            updateAllCounts();
-            renderPendingSubmissions();
-            renderLiveFeed();
-            showToast('🔄 Dashboard refreshed');
-        }
-
-        function filterByStatus(status) {
-            document.getElementById('statusFilter').value = status;
-            renderPendingSubmissions();
-        }
-
-        // ============ NAVIGATION ============
-        
         function navigateTo(page) {
             window.location.href = page;
         }
 
         function handleLogout() {
-            if (confirm('Are you sure you want to logout from SENTINEL Command Center?')) {
+            if (confirm('Sign out of SENTINEL?')) {
                 sessionStorage.clear();
                 window.location.href = 'auth.html';
             }
         }
 
-        function updateClock() {
-            const clock = document.getElementById('liveClock');
-            if (clock) {
-                clock.textContent = new Date().toLocaleTimeString('en-NG', { 
-                    timeZone: 'Africa/Lagos', 
-                    hour12: false 
-                }) + ' WAT';
-            }
-        }
-
-        // ============ INITIALIZATION ============
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check authentication
+        document.addEventListener('DOMContentLoaded', () => {
             if (!sessionStorage.getItem('sentinel_auth')) {
                 window.location.href = 'auth.html';
                 return;
             }
+            seedData();
+            updateAll();
 
-            // Initialize data
-            initializeData();
-            
-            // Update all components
-            updateAllCounts();
-            renderPendingSubmissions();
-            renderLiveFeed();
-            updateClock();
-            
-            // Set intervals
-            setInterval(updateClock, 1000);
-            setInterval(updateAllCounts, 10000); // Refresh counts every 10 seconds
-            
-            // Close modal on overlay click
-            document.getElementById('detailModal').addEventListener('click', function(e) {
-                if (e.target === this) closeModal();
-            });
+            const user = JSON.parse(sessionStorage.getItem('sentinel_user') || '{}');
+            document.getElementById('roleBadge').textContent = user.role ? user.role.replace('_', ' ').toUpperCase() : 'Administrator';
 
-            // Check for new field submissions every 5 seconds
             setInterval(() => {
-                const submissions = getAllSubmissions();
-                const previousCount = parseInt(sessionStorage.getItem('previous_submission_count') || '0');
-                if (submissions.length > previousCount) {
-                    updateAllCounts();
-                    renderPendingSubmissions();
-                    sessionStorage.setItem('previous_submission_count', submissions.length);
-                }
-            }, 5000);
-            
-            // Store initial count
-            sessionStorage.setItem('previous_submission_count', getAllSubmissions().length);
-            
-            console.log('%c🛡️ SENTINEL COMMAND DASHBOARD ACTIVE %c| %cVerification Pipeline Ready',
-                'color: #00b87a; font-weight: bold;', '', 'color: #d4af37;');
+                document.getElementById('liveClock').textContent = 
+                    new Date().toLocaleTimeString('en-NG', { timeZone: 'Africa/Lagos', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }) + ' WAT';
+            }, 1000);
+
+            setInterval(updateAll, 15000);
         });
     </script>
+
+    <script>
+// Quick test for hamburger button
+document.addEventListener('DOMContentLoaded', function() {
+    // Find or create a test button
+    var btn = document.querySelector('.hamburger-btn');
+    if (!btn) {
+        btn = document.createElement('button');
+        btn.className = 'hamburger-btn';
+        btn.innerHTML = '<i class="fas fa-bars"></i>';
+        btn.style.cssText = 'display:flex;position:fixed;top:70px;right:20px;z-index:9999;background:#00a86b;color:#fff;width:44px;height:44px;border-radius:8px;border:none;cursor:pointer;align-items:center;justify-content:center;font-size:20px;';
+        document.body.appendChild(btn);
+    }
+    
+    var sidebar = document.querySelector('.sidebar');
+    
+    btn.onclick = function() {
+        if (sidebar) {
+            sidebar.classList.toggle('mobile-open');
+            if (sidebar.classList.contains('mobile-open')) {
+                sidebar.style.transform = 'translateX(0)';
+                btn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                sidebar.style.transform = 'translateX(-100%)';
+                btn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        }
+    };
+});
+</script>
 </body>
 </html>

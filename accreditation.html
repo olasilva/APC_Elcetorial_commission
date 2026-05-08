@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENTINEL | Delegate Accreditation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>SENTINEL · Accreditation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="js/mobile-nav.js"></script>
     <link rel="stylesheet" href="css/sentinel-responsive.css">
+    <script src="js/mobile-nav.js"></script>
     <style>
         :root {
-            --deep-green: #006647;
-            --gold: #d4af37;
-            --midnight: #020c17;
-            --intel-blue: #0f283f;
-            --text-primary: #e6edf3;
-            --text-secondary: #9bb7d4;
-            --accent-green: #00b87a;
-            --danger: #ff4444;
-            --warning: #ffa500;
+            --navy-deep: #0a1628;
+            --navy-panel: #0f2035;
+            --text-primary: #dde4ed;
+            --text-secondary: #8da0b8;
+            --green: #00a86b;
+            --gold: #c4a030;
+            --border: rgba(255, 255, 255, 0.07);
+            --red: #d94a4a;
         }
 
         * {
@@ -28,20 +27,22 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--midnight);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy-deep);
             color: var(--text-primary);
             min-height: 100vh;
+            letter-spacing: -0.01em;
         }
 
         .top-nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.8rem 2rem;
-            background: rgba(2, 13, 26, 0.95);
-            border-bottom: 1px solid rgba(0, 180, 120, 0.3);
-            backdrop-filter: blur(20px);
+            height: 60px;
+            padding: 0 1.75rem;
+            background: rgba(10, 22, 40, 0.94);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -53,83 +54,111 @@
             gap: 1rem;
         }
 
-        .apc-emblem {
-            background: linear-gradient(135deg, #0a4b33, #043322);
-            padding: 0.4rem 0.8rem;
-            border-radius: 2rem;
-            border: 1px solid var(--gold);
-            color: #f5e7c6;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
+        .nav-brand img {
+            height: 30px;
         }
 
-        .sentinel-logo {
+        .nav-brand .logo-text {
             font-weight: 700;
-            font-size: 1.4rem;
-            letter-spacing: 2px;
+            font-size: 1.2rem;
+            letter-spacing: 1.5px;
         }
 
-        .sentinel-logo span {
-            color: var(--accent-green);
+        .nav-brand .logo-text span {
+            color: var(--green);
         }
 
         .main-layout {
             display: flex;
-            min-height: calc(100vh - 64px);
+            min-height: calc(100vh - 60px);
         }
 
         .sidebar {
-            width: 260px;
-            background: rgba(5, 16, 30, 0.9);
-            border-right: 1px solid rgba(0, 180, 120, 0.2);
-            padding: 1.5rem 1rem;
+            width: 250px;
+            background: rgba(13, 25, 42, 0.6);
+            border-right: 1px solid var(--border);
+            padding: 1.25rem 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .sidebar-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: #5a7795;
+            padding: 0.6rem 0.9rem 0.4rem;
+            font-weight: 600;
         }
 
         .nav-item {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            padding: 0.8rem 1rem;
-            border-radius: 0.8rem;
+            gap: 0.7rem;
+            padding: 0.65rem 0.9rem;
+            border-radius: 0.5rem;
             color: var(--text-secondary);
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.12s ease;
             font-weight: 500;
             border: none;
             background: transparent;
             width: 100%;
             text-align: left;
-            font-size: 0.9rem;
-            margin-bottom: 0.3rem;
+            font-size: 0.84rem;
+            margin-bottom: 0.1rem;
         }
 
-        .nav-item:hover, .nav-item.active {
-            background: rgba(0, 184, 122, 0.15);
-            color: var(--accent-green);
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: #c0d0e0;
+        }
+
+        .nav-item.active {
+            background: rgba(0, 168, 107, 0.1);
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .nav-item i {
+            width: 16px;
+            text-align: center;
+            font-size: 0.8rem;
         }
 
         .content-area {
             flex: 1;
-            padding: 2rem;
+            padding: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .accreditation-card {
-            background: rgba(8, 20, 32, 0.9);
-            border-radius: 2rem;
-            padding: 3rem;
-            border: 1px solid rgba(0, 180, 120, 0.3);
-            max-width: 600px;
+            background: var(--navy-panel);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            max-width: 520px;
             width: 100%;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
         }
 
-        .verification-steps {
+        .card-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .card-title h2 {
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-bottom: 0.35rem;
+        }
+
+        .card-title p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .steps-row {
             display: flex;
             justify-content: space-between;
             margin-bottom: 2rem;
@@ -138,179 +167,238 @@
         .step {
             text-align: center;
             flex: 1;
+            position: relative;
+        }
+
+        .step::after {
+            content: '';
+            position: absolute;
+            top: 18px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .step:last-child::after {
+            display: none;
         }
 
         .step-circle {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.06);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 0.5rem;
-            font-weight: 700;
+            margin: 0 auto 0.4rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 1;
         }
 
         .step.active .step-circle {
-            background: var(--accent-green);
+            background: var(--green);
+            color: #fff;
         }
 
         .step.completed .step-circle {
-            background: var(--accent-green);
+            background: var(--green);
+            color: #fff;
         }
 
-        .step-line {
-            height: 2px;
-            background: rgba(255,255,255,0.2);
-            flex: 1;
-            margin-top: 20px;
+        .step-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            font-size: 0.75rem;
             color: var(--text-secondary);
+            margin-bottom: 0.35rem;
             font-weight: 500;
         }
 
         .form-input {
             width: 100%;
-            padding: 1rem;
-            background: rgba(15, 35, 55, 0.8);
-            border: 1px solid rgba(0, 180, 120, 0.25);
-            border-radius: 0.8rem;
+            padding: 0.7rem 0.9rem;
+            background: rgba(20, 40, 60, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
             color: var(--text-primary);
-            font-size: 1rem;
+            font-size: 0.85rem;
             outline: none;
-            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
         }
 
         .form-input:focus {
-            border-color: var(--accent-green);
-            box-shadow: 0 0 15px rgba(0, 184, 122, 0.2);
+            border-color: var(--green);
+        }
+
+        select.form-input {
+            cursor: pointer;
+        }
+
+        .biometric-area {
+            border: 2px dashed rgba(0, 168, 107, 0.3);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            margin: 1.25rem 0;
+            transition: all 0.2s ease;
+        }
+
+        .biometric-area:hover {
+            border-color: var(--green);
+            background: rgba(0, 168, 107, 0.05);
+        }
+
+        .biometric-area i {
+            font-size: 2.5rem;
+            color: var(--green);
+            margin-bottom: 0.75rem;
+        }
+
+        .status-message {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            display: none;
+            font-size: 0.82rem;
+        }
+
+        .status-success {
+            display: block;
+            background: rgba(0, 168, 107, 0.1);
+            color: var(--green);
+            border: 1px solid rgba(0, 168, 107, 0.2);
+        }
+
+        .status-error {
+            display: block;
+            background: rgba(217, 74, 74, 0.1);
+            color: var(--red);
+            border: 1px solid rgba(217, 74, 74, 0.2);
         }
 
         .btn {
-            padding: 1rem 2rem;
-            border-radius: 0.8rem;
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 0.5rem;
             font-weight: 600;
             cursor: pointer;
             border: none;
-            transition: 0.2s;
-            font-size: 1rem;
-            width: 100%;
+            font-size: 0.9rem;
+            transition: background 0.12s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
         }
 
-        .btn-primary { background: var(--accent-green); color: white; }
-        .btn-primary:hover { background: #00d48f; }
-        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .biometric-box {
-            border: 2px dashed var(--accent-green);
-            border-radius: 1rem;
-            padding: 2rem;
-            text-align: center;
-            margin: 1.5rem 0;
-            cursor: pointer;
-            transition: 0.3s;
+        .btn-primary {
+            background: var(--green);
+            color: #fff;
         }
 
-        .biometric-box:hover {
-            background: rgba(0, 184, 122, 0.1);
+        .btn-primary:hover {
+            background: #00955e;
         }
 
-        .status-message {
-            padding: 1rem;
-            border-radius: 0.8rem;
-            margin-top: 1rem;
-            display: none;
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
-        .status-success {
-            background: rgba(0, 184, 122, 0.2);
-            color: #00e08a;
-            border: 1px solid #00e08a;
-            display: block;
-        }
-
-        .status-error {
-            background: rgba(255, 68, 68, 0.2);
-            color: #ff4444;
-            border: 1px solid #ff4444;
-            display: block;
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 55px;
+            }
+            .nav-item span,
+            .sidebar-label {
+                display: none;
+            }
+            .accreditation-card {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <nav class="top-nav">
-        <div class="nav-brand">
-           <div class="apc-emblem">
-    <img src="assets/apc2.png" alt="APC Logo" class="apc-logo-img">
-</div>>
-            <div class="sentinel-logo">APC<span>.</span></div>
-        </div>
-        <div style="display:flex; align-items:center; gap:1rem;">
-            <span id="liveClock" style="font-weight:600;"></span>
-        </div>
-    </nav>
+    <!-- Left: Brand -->
+    <div class="nav-brand">
+        <img src="assets/apc2.png" alt="APC" class="nav-logo-img" onerror="this.style.display='none'">
+        <span class="nav-logo-text">APC<span>.</span></span>
+    </div>
+    
+    <!-- Center: Hamburger (mobile only) -->
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Right: Status items -->
+    <div class="nav-status">
+        <span class="nav-pill nav-pill-live">
+            <span class="pulse-dot"></span> Live
+        </span>
+        <span class="nav-pill nav-pill-role" id="roleBadge">
+            <i class="fas fa-shield-alt"></i> Admin
+        </span>
+        <span class="nav-time" id="liveClock">--:--:--</span>
+    </div>
+</nav>
 
     <div class="main-layout">
         <aside class="sidebar">
+            <div class="sidebar-label">Elections</div>
             <button class="nav-item" onclick="window.location.href='dashboard.html'">
-                <i class="fas fa-th-large"></i> Command Center
+                <i class="fas fa-compass"></i> <span>Command Center</span>
             </button>
             <button class="nav-item" onclick="window.location.href='primaries.html'">
-                <i class="fas fa-vote-yea"></i> Primary Elections
+                <i class="fas fa-vote-yea"></i> <span>Primary Elections</span>
             </button>
             <button class="nav-item active">
-                <i class="fas fa-id-card"></i> Accreditation
+                <i class="fas fa-id-card"></i> <span>Accreditation</span>
             </button>
             <button class="nav-item" onclick="window.location.href='delegate-vote.html'">
-                <i class="fas fa-check-circle"></i> Voting Portal
+                <i class="fas fa-check-circle"></i> <span>Voting Portal</span>
             </button>
             <button class="nav-item" onclick="window.location.href='collation.html'">
-                <i class="fas fa-calculator"></i> Collation Center
-            </button>
-            <button class="nav-item" onclick="window.location.href='candidates.html'">
-                <i class="fas fa-database"></i> Winner Registry
+                <i class="fas fa-calculator"></i> <span>Collation</span>
             </button>
             <button class="nav-item" onclick="handleLogout()">
-                <i class="fas fa-sign-out-alt"></i> Logout
+                <i class="fas fa-sign-out-alt"></i> <span>Sign Out</span>
             </button>
         </aside>
 
         <main class="content-area">
             <div class="accreditation-card">
-                <div style="text-align:center; margin-bottom:2rem;">
-                    <h2 style="color: var(--gold); margin-bottom:0.5rem;">
-                        <i class="fas fa-fingerprint"></i> DELEGATE ACCREDITATION
-                    </h2>
-                    <p style="color: var(--text-secondary);">Verify your identity to proceed to voting</p>
+                <div class="card-title">
+                    <h2><i class="fas fa-fingerprint"></i> Delegate Accreditation</h2>
+                    <p>Verify your identity to proceed to voting</p>
                 </div>
 
-                <div class="verification-steps">
+                <div class="steps-row">
                     <div class="step active" id="step1">
                         <div class="step-circle">1</div>
-                        <small>ID Check</small>
+                        <div class="step-label">ID Check</div>
                     </div>
-                    <div class="step-line"></div>
                     <div class="step" id="step2">
                         <div class="step-circle">2</div>
-                        <small>Biometric</small>
+                        <div class="step-label">Biometric</div>
                     </div>
-                    <div class="step-line"></div>
                     <div class="step" id="step3">
                         <div class="step-circle">3</div>
-                        <small>Approved</small>
+                        <div class="step-label">Approved</div>
                     </div>
                 </div>
 
@@ -322,7 +410,7 @@
 
                     <div class="form-group">
                         <label>Delegate Card Number *</label>
-                        <input type="text" class="form-input" placeholder="Enter your delegate card number" required>
+                        <input type="text" class="form-input" placeholder="Enter delegate card number" required>
                     </div>
 
                     <div class="form-group">
@@ -339,16 +427,16 @@
                         <input type="text" class="form-input" placeholder="Your ward">
                     </div>
 
-                    <div class="biometric-box" onclick="simulateBiometric()">
-                        <i class="fas fa-fingerprint" style="font-size:3rem; color: var(--accent-green); margin-bottom:1rem;"></i>
-                        <h4>Fingerprint Verification</h4>
-                        <p style="color: var(--text-secondary); font-size:0.9rem;">Click to scan fingerprint</p>
+                    <div class="biometric-area" onclick="simulateBiometric()">
+                        <i class="fas fa-fingerprint"></i>
+                        <h4 style="margin-bottom:0.3rem;">Fingerprint Verification</h4>
+                        <p style="color:var(--text-secondary);font-size:0.8rem;">Click to initiate scan</p>
                     </div>
 
                     <div id="statusMessage" class="status-message"></div>
 
                     <button type="submit" class="btn btn-primary" id="submitBtn">
-                        <i class="fas fa-check-circle"></i> VERIFY & PROCEED
+                        <i class="fas fa-check-circle"></i> Verify & Proceed
                     </button>
                 </form>
             </div>
@@ -361,19 +449,45 @@
             window.location.href = 'auth.html';
         }
 
+        // Update clock in top nav
+function updateClock() {
+    const clockEl = document.getElementById('liveClock');
+    if (clockEl) {
+        const now = new Date();
+        const options = {
+            timeZone: 'Africa/Lagos',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        };
+        clockEl.textContent = now.toLocaleTimeString('en-NG', options) + ' WAT';
+    }
+
+    // Also update role badge
+    const roleEl = document.getElementById('roleText');
+    if (roleEl && roleEl.textContent === 'Loading...') {
+        const user = JSON.parse(sessionStorage.getItem('sentinel_user') || '{}');
+        if (user.role) {
+            roleEl.textContent = user.role.replace(/_/g, ' ').toUpperCase();
+        }
+    }
+}
+
+// Run immediately and then every second
+updateClock();
+setInterval(updateClock, 1000);
         let biometricVerified = false;
 
         function simulateBiometric() {
-            const bioBox = document.querySelector('.biometric-box');
-            bioBox.style.borderColor = '#00e08a';
-            bioBox.style.background = 'rgba(0, 184, 122, 0.15)';
+            const bioBox = document.querySelector('.biometric-area');
+            bioBox.style.borderColor = 'var(--green)';
+            bioBox.style.background = 'rgba(0, 168, 107, 0.08)';
             
             setTimeout(() => {
                 biometricVerified = true;
                 document.getElementById('statusMessage').className = 'status-message status-success';
-                document.getElementById('statusMessage').innerHTML = '✅ Biometric verification successful';
-                
-                // Update steps
+                document.getElementById('statusMessage').innerHTML = '✓ Biometric verification successful';
                 document.getElementById('step2').classList.add('completed');
             }, 2000);
         }
@@ -383,22 +497,20 @@
             
             if (!biometricVerified) {
                 document.getElementById('statusMessage').className = 'status-message status-error';
-                document.getElementById('statusMessage').innerHTML = '❌ Please complete biometric verification first';
+                document.getElementById('statusMessage').innerHTML = '✗ Please complete biometric verification';
                 return;
             }
 
             const btn = document.getElementById('submitBtn');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> VERIFYING...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Verifying...';
 
             setTimeout(() => {
-                // Store accreditation token
                 sessionStorage.setItem('delegate_accredited', 'true');
                 sessionStorage.setItem('accreditation_time', new Date().toISOString());
                 
                 document.getElementById('statusMessage').className = 'status-message status-success';
-                document.getElementById('statusMessage').innerHTML = '✅ Accreditation successful! Redirecting to voting portal...';
-                
+                document.getElementById('statusMessage').innerHTML = '✓ Accreditation successful. Redirecting...';
                 document.getElementById('step3').classList.add('completed');
                 
                 setTimeout(() => {
@@ -415,9 +527,39 @@
 
             setInterval(() => {
                 document.getElementById('liveClock').textContent = 
-                    new Date().toLocaleTimeString('en-NG', { timeZone: 'Africa/Lagos', hour12: false });
+                    new Date().toLocaleTimeString('en-NG', { timeZone: 'Africa/Lagos', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }) + ' WAT';
             }, 1000);
         });
     </script>
+
+    <script>
+// Quick test for hamburger button
+document.addEventListener('DOMContentLoaded', function() {
+    // Find or create a test button
+    var btn = document.querySelector('.hamburger-btn');
+    if (!btn) {
+        btn = document.createElement('button');
+        btn.className = 'hamburger-btn';
+        btn.innerHTML = '<i class="fas fa-bars"></i>';
+        btn.style.cssText = 'display:flex;position:fixed;top:70px;right:20px;z-index:9999;background:#00a86b;color:#fff;width:44px;height:44px;border-radius:8px;border:none;cursor:pointer;align-items:center;justify-content:center;font-size:20px;';
+        document.body.appendChild(btn);
+    }
+    
+    var sidebar = document.querySelector('.sidebar');
+    
+    btn.onclick = function() {
+        if (sidebar) {
+            sidebar.classList.toggle('mobile-open');
+            if (sidebar.classList.contains('mobile-open')) {
+                sidebar.style.transform = 'translateX(0)';
+                btn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                sidebar.style.transform = 'translateX(-100%)';
+                btn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        }
+    };
+});
+</script>
 </body>
 </html>

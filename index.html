@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENTINEL - APC National Electoral Intelligence</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/sentinel-responsive.css">
-    <script src="js/mobile-nav.js"></script>
+    <title>SENTINEL · APC Electoral Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,7 +14,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #020c17;
+            background: #0a1628;
             height: 100vh;
             display: flex;
             align-items: center;
@@ -24,123 +22,83 @@
             overflow: hidden;
         }
 
-        .loader-wrapper {
+        .splash-wrapper {
             text-align: center;
-            width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             padding: 2rem;
         }
 
-        /* Logo Container */
         .logo-container {
             margin-bottom: 3rem;
-            animation: fadeInDown 0.8s ease-out;
         }
 
         .logo-container img {
-            width: 120px;
+            width: 100px;
             height: auto;
             object-fit: contain;
-            display: block;
-            margin: 0 auto;
         }
 
-        /* Fallback logo if image missing */
         .logo-fallback {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             background: linear-gradient(135deg, #006647, #003d2b);
-            border: 3px solid #d4af37;
+            border: 2px solid #c4a030;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto;
-            box-shadow: 0 0 40px rgba(0, 166, 107, 0.3);
-        }
-
-        .logo-fallback span {
-            color: #ffffff;
-            font-weight: 900;
-            font-size: 2.2rem;
-            letter-spacing: 2px;
-        }
-
-        /* Brand Text Below Logo */
-        .brand-text {
-            margin-top: 1.5rem;
-            color: #e0e8f0;
+            color: #fff;
+            font-weight: 800;
             font-size: 1.8rem;
+        }
+
+        .brand-name {
+            margin-top: 1.25rem;
+            color: #dde4ed;
+            font-size: 1.6rem;
             font-weight: 700;
-            letter-spacing: 6px;
-            animation: fadeIn 1s ease-out 0.3s both;
+            letter-spacing: 4px;
         }
 
-        .brand-text span {
-            color: #00b87a;
+        .brand-name span {
+            color: #00a86b;
         }
 
-        .brand-subtitle {
-            color: #7f95aa;
+        .brand-tagline {
+            color: #5a7795;
             font-size: 0.7rem;
             letter-spacing: 3px;
-            margin-top: 0.5rem;
+            margin-top: 0.3rem;
             text-transform: uppercase;
-            animation: fadeIn 1s ease-out 0.5s both;
         }
 
-        /* Loading Line */
-        .loader-line-container {
-            width: 100%;
-            margin-top: 3rem;
-            animation: fadeIn 1s ease-out 0.7s both;
-        }
-
-        .loader-line-track {
+        .loader-track {
             width: 100%;
             height: 2px;
             background: rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
+            border-radius: 2px;
+            margin-top: 2.5rem;
             overflow: hidden;
-            position: relative;
         }
 
-        .loader-line-fill {
+        .loader-fill {
             height: 100%;
-            background: linear-gradient(90deg, #006647, #00b87a, #00ff9d);
+            background: linear-gradient(90deg, #006647, #00a86b);
             width: 0%;
-            border-radius: 10px;
-            animation: loadingProgress 2.5s ease-in-out forwards;
-            position: relative;
+            animation: loadProgress 2.5s ease-in-out forwards;
+            border-radius: 2px;
         }
 
-        /* Glow effect on the moving end */
-        .loader-line-fill::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            background: #00ff9d;
-            border-radius: 50%;
-            box-shadow: 0 0 15px #00ff9d, 0 0 30px rgba(0, 255, 157, 0.5);
-            animation: pulseGlow 1.5s infinite;
-        }
-
-        /* Status text */
         .status-text {
-            color: #5a7a90;
-            font-size: 0.75rem;
+            color: #5a7795;
+            font-size: 0.7rem;
             letter-spacing: 2px;
-            margin-top: 1.5rem;
+            margin-top: 1.25rem;
             text-transform: uppercase;
-            animation: fadeIn 1s ease-out 0.9s both;
         }
 
-        /* Animations */
-        @keyframes loadingProgress {
+        @keyframes loadProgress {
             0% { width: 0%; }
             30% { width: 35%; }
             60% { width: 70%; }
@@ -148,37 +106,11 @@
             100% { width: 100%; }
         }
 
-        @keyframes pulseGlow {
-            0%, 100% { 
-                box-shadow: 0 0 10px #00ff9d, 0 0 20px rgba(0, 255, 157, 0.3); 
-            }
-            50% { 
-                box-shadow: 0 0 25px #00ff9d, 0 0 50px rgba(0, 255, 157, 0.6); 
-            }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInDown {
-            from { 
-                opacity: 0; 
-                transform: translateY(-20px); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-        }
-
-        /* Subtle background particles */
-        .bg-particle {
+        .particle {
             position: fixed;
             width: 1px;
             height: 1px;
-            background: #00b87a;
+            background: #00a86b;
             border-radius: 50%;
             pointer-events: none;
             animation: floatUp 4s infinite;
@@ -186,125 +118,89 @@
         }
 
         @keyframes floatUp {
-            0% { 
-                transform: translateY(0) translateX(0); 
-                opacity: 0; 
-            }
-            20% { opacity: 0.5; }
-            80% { opacity: 0.3; }
-            100% { 
-                transform: translateY(-100vh) translateX(50px); 
-                opacity: 0; 
-            }
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            20% { opacity: 0.4; }
+            80% { opacity: 0.2; }
+            100% { transform: translateY(-100vh) translateX(40px); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Background Particles -->
     <div id="particlesContainer"></div>
 
-    <!-- Main Loader Content -->
-    <div class="loader-wrapper">
-        
-        <!-- APC Logo -->
+    <div class="splash-wrapper">
         <div class="logo-container" id="logoContainer">
-            <img src="assets/apc2.png" alt="APC Logo" id="apcLogo" 
+            <img src="assets/apc2.png" alt="APC" id="apcLogo" 
                  onerror="handleLogoError()">
         </div>
-
-        <!-- Loading Line -->
-        <div class="loader-line-container">
-            <div class="loader-line-track">
-                <div class="loader-line-fill" id="loaderFill"></div>
-            </div>
+        <div class="loader-track">
+            <div class="loader-fill"></div>
         </div>
-
-        <!-- Status Text -->
-        <p class="status-text" id="statusMessage">INITIALIZING SECURE COMMAND PROTOCOL</p>
-
+        <p class="status-text" id="statusMessage">Initializing Secure Protocol</p>
     </div>
 
     <script>
-        // Handle logo loading error
         function handleLogoError() {
-            const logoContainer = document.getElementById('logoContainer');
             const logoImg = document.getElementById('apcLogo');
-            
-            if (logoImg) {
-                logoImg.style.display = 'none';
-            }
-            
-            // Create fallback
+            if (logoImg) logoImg.style.display = 'none';
+            const container = document.getElementById('logoContainer');
             const fallback = document.createElement('div');
             fallback.className = 'logo-fallback';
-            fallback.innerHTML = '<span>APC</span>';
-            logoContainer.appendChild(fallback);
+            fallback.textContent = 'APC';
+            container.appendChild(fallback);
         }
 
-        // Generate background particles
         function createParticles() {
             const container = document.getElementById('particlesContainer');
-            const particleCount = 30;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'bg-particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.bottom = '0';
-                particle.style.animationDelay = Math.random() * 4 + 's';
-                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                container.appendChild(particle);
+            for (let i = 0; i < 25; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.bottom = '0';
+                p.style.animationDelay = Math.random() * 4 + 's';
+                p.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                container.appendChild(p);
             }
         }
 
-        // Status messages sequence
-        const statusMessages = [
-            'INITIALIZING SECURE COMMAND PROTOCOL',
-            'ESTABLISHING ENCRYPTED CONNECTION',
-            'VERIFYING NATIONAL DATABASE',
-            'LOADING ELECTORAL INTELLIGENCE',
-            'SYNCHRONIZING REAL-TIME FEEDS',
-            'ACCESS GRANTED - REDIRECTING'
+        const messages = [
+            'Initializing Secure Protocol',
+            'Establishing Encrypted Connection',
+            'Verifying National Database',
+            'Loading Electoral Intelligence',
+            'Synchronizing Real-time Feeds',
+            'Access Granted'
         ];
 
-        let messageIndex = 0;
-        const statusElement = document.getElementById('statusMessage');
+        let msgIndex = 0;
+        const statusEl = document.getElementById('statusMessage');
 
-        // Cycle through status messages
-        const messageInterval = setInterval(() => {
-            messageIndex++;
-            if (messageIndex < statusMessages.length) {
-                statusElement.style.opacity = '0';
+        const msgInterval = setInterval(() => {
+            msgIndex++;
+            if (msgIndex < messages.length) {
+                statusEl.style.opacity = '0';
                 setTimeout(() => {
-                    statusElement.textContent = statusMessages[messageIndex];
-                    statusElement.style.opacity = '1';
-                }, 200);
+                    statusEl.textContent = messages[msgIndex];
+                    statusEl.style.opacity = '1';
+                }, 150);
             } else {
-                clearInterval(messageInterval);
+                clearInterval(msgInterval);
             }
         }, 400);
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             createParticles();
-            
-            // Add smooth transition for status text
-            statusElement.style.transition = 'opacity 0.3s ease';
-            
-            // Redirect after loading animation completes
+            statusEl.style.transition = 'opacity 0.2s ease';
+
             setTimeout(() => {
-                document.querySelector('.loader-wrapper').style.opacity = '0';
-                document.querySelector('.loader-wrapper').style.transition = 'opacity 0.5s ease';
-                
+                document.querySelector('.splash-wrapper').style.opacity = '0';
+                document.querySelector('.splash-wrapper').style.transition = 'opacity 0.4s ease';
                 setTimeout(() => {
                     window.location.href = 'auth.html';
-                }, 500);
+                }, 400);
             }, 3000);
         });
-
-        // Disable right-click for security feel
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
     </script>
 </body>
 </html>

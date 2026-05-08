@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENTINEL | Winner Registry</title>
+    <title>SENTINEL · Winner Registry</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/sentinel-responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="js/mobile-nav.js"></script>
+    <link rel="stylesheet" href="css/sentinel-responsive.css">
     <style>
         :root {
-            --deep-green: #006647;
-            --gold: #d4af37;
-            --midnight: #020c17;
-            --intel-blue: #0f283f;
-            --text-primary: #e6edf3;
-            --text-secondary: #9bb7d4;
-            --accent-green: #00b87a;
+            --navy-deep: #0a1628;
+            --navy-panel: #0f2035;
+            --text-primary: #dde4ed;
+            --text-secondary: #8da0b8;
+            --green: #00a86b;
+            --gold: #c4a030;
+            --border: rgba(255, 255, 255, 0.07);
+            --red: #d94a4a;
+            --amber: #d4a030;
         }
 
         * {
@@ -26,20 +27,25 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--midnight);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy-deep);
             color: var(--text-primary);
             min-height: 100vh;
+            letter-spacing: -0.01em;
         }
 
         .top-nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.8rem 2rem;
-            background: rgba(2, 13, 26, 0.95);
-            border-bottom: 1px solid rgba(0, 180, 120, 0.3);
-            backdrop-filter: blur(20px);
+            height: 60px;
+            padding: 0 1.75rem;
+            background: rgba(10, 22, 40, 0.94);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .nav-brand {
@@ -48,281 +54,340 @@
             gap: 1rem;
         }
 
-        .apc-emblem {
-            background: linear-gradient(135deg, #0a4b33, #043322);
-            padding: 0.4rem 0.8rem;
-            border-radius: 2rem;
-            border: 1px solid var(--gold);
-            color: #f5e7c6;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
+        .nav-brand img {
+            height: 30px;
         }
 
-        .sentinel-logo {
+        .nav-brand .logo-text {
             font-weight: 700;
-            font-size: 1.4rem;
-            letter-spacing: 2px;
+            font-size: 1.2rem;
+            letter-spacing: 1.5px;
         }
 
-        .sentinel-logo span {
-            color: var(--accent-green);
+        .nav-brand .logo-text span {
+            color: var(--green);
         }
 
         .main-layout {
             display: flex;
-            min-height: calc(100vh - 64px);
+            min-height: calc(100vh - 60px);
         }
 
         .sidebar {
-            width: 260px;
-            background: rgba(5, 16, 30, 0.9);
-            border-right: 1px solid rgba(0, 180, 120, 0.2);
-            padding: 1.5rem 1rem;
+            width: 250px;
+            background: rgba(13, 25, 42, 0.6);
+            border-right: 1px solid var(--border);
+            padding: 1.25rem 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .sidebar-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: #5a7795;
+            padding: 0.6rem 0.9rem 0.4rem;
+            font-weight: 600;
         }
 
         .nav-item {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            padding: 0.8rem 1rem;
-            border-radius: 0.8rem;
+            gap: 0.7rem;
+            padding: 0.65rem 0.9rem;
+            border-radius: 0.5rem;
             color: var(--text-secondary);
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.12s ease;
             font-weight: 500;
             border: none;
             background: transparent;
             width: 100%;
             text-align: left;
-            font-size: 0.9rem;
-            margin-bottom: 0.3rem;
+            font-size: 0.84rem;
+            margin-bottom: 0.1rem;
         }
 
-        .nav-item:hover, .nav-item.active {
-            background: rgba(0, 184, 122, 0.15);
-            color: var(--accent-green);
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: #c0d0e0;
+        }
+
+        .nav-item.active {
+            background: rgba(0, 168, 107, 0.1);
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .nav-item i {
+            width: 16px;
+            text-align: center;
+            font-size: 0.8rem;
         }
 
         .content-area {
             flex: 1;
-            padding: 2rem;
+            padding: 1.5rem;
             overflow-y: auto;
         }
 
-        .search-filters {
+        .page-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #eef2f7;
+            margin-bottom: 0.25rem;
+        }
+
+        .page-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-bar {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
             flex-wrap: wrap;
+            align-items: center;
         }
 
-        .filter-control {
-            background: rgba(15, 35, 55, 0.8);
-            border: 1px solid rgba(0, 180, 120, 0.25);
-            border-radius: 0.8rem;
-            padding: 0.7rem 1.2rem;
+        .filter-input {
+            background: rgba(20, 40, 60, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 0.55rem 0.9rem;
             color: var(--text-primary);
-            font-size: 0.9rem;
-            min-width: 180px;
+            font-size: 0.85rem;
+            min-width: 200px;
+            outline: none;
         }
 
-        .search-input {
-            flex: 1;
-            min-width: 250px;
-            background: rgba(15, 35, 55, 0.8);
-            border: 1px solid rgba(0, 180, 120, 0.25);
-            border-radius: 0.8rem;
-            padding: 0.7rem 1.2rem;
+        .filter-input:focus {
+            border-color: var(--green);
+        }
+
+        .filter-select {
+            background: rgba(20, 40, 60, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 0.55rem 0.9rem;
             color: var(--text-primary);
-            font-size: 0.9rem;
-        }
-
-        .btn {
-            padding: 0.7rem 1.5rem;
-            border-radius: 0.8rem;
-            font-weight: 600;
+            font-size: 0.85rem;
             cursor: pointer;
-            border: none;
-            transition: 0.2s;
+            outline: none;
         }
 
         .btn-primary {
-            background: var(--accent-green);
-            color: white;
+            background: var(--green);
+            border: none;
+            color: #fff;
+            padding: 0.55rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
         }
 
         .btn-primary:hover {
-            background: #00d48f;
+            background: #00955e;
         }
 
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            background: rgba(8, 20, 32, 0.7);
-            border-radius: 1rem;
+            background: var(--navy-panel);
+            border-radius: 0.75rem;
             overflow: hidden;
+            border: 1px solid var(--border);
         }
 
         .data-table th {
             text-align: left;
-            padding: 1rem;
-            background: #06212e;
-            font-size: 0.8rem;
+            padding: 0.75rem 1rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #b9d1c2;
+            color: var(--text-secondary);
+            font-weight: 600;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--border);
             cursor: pointer;
         }
 
         .data-table th:hover {
-            color: var(--accent-green);
+            color: #c0d0e0;
         }
 
         .data-table td {
-            padding: 1rem;
-            border-bottom: 1px solid #1a3a40;
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
-        .candidate-cell {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .candidate-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #1e3b51;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid var(--gold);
+        .data-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .status-badge {
-            padding: 0.3rem 0.8rem;
-            border-radius: 1rem;
-            font-size: 0.75rem;
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
             font-weight: 600;
         }
 
-        .status-verified {
-            background: rgba(0, 168, 107, 0.2);
-            color: #00e08a;
+        .badge-verified {
+            background: rgba(0, 168, 107, 0.15);
+            color: var(--green);
         }
 
-        .status-pending {
-            background: rgba(212, 175, 55, 0.2);
-            color: #d4af37;
+        .badge-pending {
+            background: rgba(212, 160, 48, 0.1);
+            color: var(--amber);
         }
 
-        .status-disputed {
-            background: rgba(255, 68, 68, 0.2);
-            color: #ff4444;
+        .badge-disputed {
+            background: rgba(217, 74, 74, 0.1);
+            color: var(--red);
+        }
+
+        .btn-link {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-secondary);
+            padding: 0.35rem 0.7rem;
+            border-radius: 0.35rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.12s ease;
+        }
+
+        .btn-link:hover {
+            border-color: var(--green);
+            color: var(--green);
         }
 
         .pagination {
             display: flex;
             justify-content: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
+            gap: 0.35rem;
+            margin-top: 1.5rem;
         }
 
         .page-btn {
-            padding: 0.5rem 1rem;
-            background: rgba(15, 35, 55, 0.8);
-            border: 1px solid rgba(0, 180, 120, 0.25);
-            border-radius: 0.5rem;
-            color: var(--text-primary);
+            padding: 0.4rem 0.8rem;
+            background: var(--navy-panel);
+            border: 1px solid var(--border);
+            border-radius: 0.35rem;
+            color: var(--text-secondary);
             cursor: pointer;
+            font-size: 0.8rem;
         }
 
         .page-btn.active {
-            background: var(--accent-green);
-            color: white;
+            background: var(--green);
+            color: #fff;
+            border-color: var(--green);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 55px;
+            }
+            .nav-item span,
+            .sidebar-label {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="top-nav">
-        <div class="nav-brand">
-            <div class="apc-emblem">
-    <img src="assets/apc2.png" alt="APC Logo" class="apc-logo-img">
-</div>
-            <div class="sentinel-logo">APC<span>.</span></div>
-        </div>
-        <div style="display:flex; align-items:center; gap:1rem;">
-            <span id="liveClock"></span>
-            <button class="btn btn-primary" onclick="window.location.href='dashboard.html'">
-                <i class="fas fa-th-large"></i> Dashboard
-            </button>
-        </div>
-    </nav>
-
+   <nav class="top-nav">
+    <!-- Left: Brand -->
+    <div class="nav-brand">
+        <img src="assets/apc2.png" alt="APC" class="nav-logo-img" onerror="this.style.display='none'">
+        <span class="nav-logo-text">APC<span>.</span></span>
+    </div>
+    
+    <!-- Center: Hamburger (mobile only) -->
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Right: Status items -->
+    <div class="nav-status">
+        <span class="nav-pill nav-pill-live">
+            <span class="pulse-dot"></span> Live
+        </span>
+        <span class="nav-pill nav-pill-role" id="roleBadge">
+            <i class="fas fa-shield-alt"></i> Admin
+        </span>
+        <span class="nav-time" id="liveClock">--:--:--</span>
+    </div>
+</nav>
     <div class="main-layout">
         <aside class="sidebar">
+            <div class="sidebar-label">Platform</div>
             <button class="nav-item" onclick="window.location.href='dashboard.html'">
-                <i class="fas fa-th-large"></i> Command Center
+                <i class="fas fa-compass"></i> <span>Command Center</span>
             </button>
             <button class="nav-item active">
-                <i class="fas fa-database"></i> Winner Registry
+                <i class="fas fa-database"></i> <span>Winner Registry</span>
             </button>
             <button class="nav-item" onclick="window.location.href='analytics.html'">
-                <i class="fas fa-chart-pie"></i> Analytics
+                <i class="fas fa-chart-bar"></i> <span>Analytics</span>
             </button>
             <button class="nav-item" onclick="window.location.href='profile.html'">
-                <i class="fas fa-user"></i> Profiles
+                <i class="fas fa-user"></i> <span>Profiles</span>
             </button>
+            <div class="sidebar-label">System</div>
             <button class="nav-item" onclick="window.location.href='admin.html'">
-                <i class="fas fa-cog"></i> Admin
+                <i class="fas fa-shield-alt"></i> <span>Administration</span>
             </button>
             <button class="nav-item" onclick="handleLogout()">
-                <i class="fas fa-sign-out-alt"></i> Logout
+                <i class="fas fa-sign-out-alt"></i> <span>Sign Out</span>
             </button>
         </aside>
 
         <main class="content-area">
-            <h2 style="margin-bottom:1.5rem; color: var(--gold);">
-                <i class="fas fa-database"></i> WINNER REGISTRY DATABASE
-            </h2>
+            <h2 class="page-title">Winner Registry</h2>
+            <p class="page-subtitle">Verified primary election winners — APC 2026</p>
 
-            <div class="search-filters">
-                <input type="text" class="search-input" placeholder="🔍 Search by name, state, or constituency..." id="searchInput" onkeyup="filterTable()">
-                <select class="filter-control" id="stateFilter" onchange="filterTable()">
+            <div class="filter-bar">
+                <input type="text" class="filter-input" placeholder="Search by name or constituency..." id="searchInput" onkeyup="filterTable()">
+                <select class="filter-select" id="stateFilter" onchange="filterTable()">
                     <option value="">All States</option>
-                    <option>Lagos</option><option>Kano</option><option>Kaduna</option>
+                    <option>Kano</option><option>Kaduna</option><option>Lagos</option>
                     <option>Borno</option><option>Rivers</option><option>Enugu</option>
-                    <option>Oyo</option><option>Katsina</option><option>Anambra</option>
+                    <option>Ogun</option><option>Delta</option><option>Kwara</option>
                 </select>
-                <select class="filter-control" id="officeFilter" onchange="filterTable()">
+                <select class="filter-select" id="officeFilter" onchange="filterTable()">
                     <option value="">All Offices</option>
                     <option>Governor</option><option>Senate</option>
-                    <option>House of Reps</option><option>State Assembly</option>
+                    <option>House of Representatives</option><option>State Assembly</option>
                 </select>
-                <select class="filter-control" id="statusFilter" onchange="filterTable()">
+                <select class="filter-select" id="statusFilter" onchange="filterTable()">
                     <option value="">All Status</option>
                     <option>Verified</option><option>Pending</option><option>Disputed</option>
                 </select>
-                <button class="btn btn-primary" onclick="exportData()">
-                    <i class="fas fa-download"></i> Export
+                <button class="btn-primary" onclick="exportData()">
+                    <i class="fas fa-download"></i> Export CSV
                 </button>
             </div>
 
-            <div style="overflow-x: auto;">
+            <div style="overflow-x:auto;">
                 <table class="data-table" id="candidatesTable">
                     <thead>
                         <tr>
-                            <th onclick="sortTable(0)">Candidate ↕</th>
-                            <th onclick="sortTable(1)">Office ↕</th>
-                            <th onclick="sortTable(2)">State ↕</th>
-                            <th onclick="sortTable(3)">Constituency ↕</th>
-                            <th onclick="sortTable(4)">Votes ↕</th>
-                            <th onclick="sortTable(5)">Date Declared ↕</th>
+                            <th onclick="sortTable(0)">Candidate</th>
+                            <th onclick="sortTable(1)">Office</th>
+                            <th onclick="sortTable(2)">State</th>
+                            <th onclick="sortTable(3)">Constituency</th>
+                            <th onclick="sortTable(4)">Votes</th>
+                            <th onclick="sortTable(5)">Date</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="tableBody"></tbody>
@@ -334,27 +399,54 @@
     </div>
 
     <script>
-        // Full candidate database
         const candidates = [
-            { name: 'Hon. Musa Ibrahim', office: 'Senate', state: 'Kano', constituency: 'Kano Central', votes: 1248, date: '2026-05-07', status: 'Verified', gender: 'Male' },
-            { name: 'Fatima Bello', office: 'House of Reps', state: 'Kaduna', constituency: 'Kaduna North', votes: 876, date: '2026-05-06', status: 'Verified', gender: 'Female' },
-            { name: 'Dr. Chidi Okonkwo', office: 'Governor', state: 'Enugu', constituency: 'Statewide', votes: 2103, date: '2026-05-05', status: 'Verified', gender: 'Male' },
-            { name: 'Aliyu Sani', office: 'State Assembly', state: 'Borno', constituency: 'Maiduguri Metro', votes: 432, date: '2026-05-07', status: 'Verified', gender: 'Male' },
-            { name: 'Kashim Ibrahim', office: 'Senate', state: 'Borno', constituency: 'Borno Central', votes: 987, date: '2026-05-04', status: 'Verified', gender: 'Male' },
-            { name: 'Aisha Bello', office: 'House of Reps', state: 'Kwara', constituency: 'Ilorin West', votes: 654, date: '2026-05-03', status: 'Pending', gender: 'Female' },
-            { name: 'Yakubu Mohammed', office: 'Senate', state: 'Katsina', constituency: 'Katsina Central', votes: 1123, date: '2026-05-06', status: 'Verified', gender: 'Male' },
-            { name: 'Ngozi Adeola', office: 'House of Reps', state: 'Ogun', constituency: 'Ogun West', votes: 543, date: '2026-05-05', status: 'Disputed', gender: 'Female' },
-            { name: 'Emeka Nwankwo', office: 'Governor', state: 'Anambra', constituency: 'Statewide', votes: 1876, date: '2026-05-04', status: 'Verified', gender: 'Male' },
-            { name: 'Zainab Usman', office: 'State Assembly', state: 'Kano', constituency: 'Kano Municipal', votes: 321, date: '2026-05-07', status: 'Verified', gender: 'Female' },
-            { name: 'Ibrahim Tanko', office: 'Senate', state: 'Plateau', constituency: 'Plateau North', votes: 876, date: '2026-05-03', status: 'Pending', gender: 'Male' },
-            { name: 'Grace Okonkwo', office: 'House of Reps', state: 'Delta', constituency: 'Delta Central', votes: 765, date: '2026-05-06', status: 'Verified', gender: 'Female' },
-            { name: 'Samuel Ortom', office: 'Governor', state: 'Benue', constituency: 'Statewide', votes: 2345, date: '2026-05-05', status: 'Verified', gender: 'Male' },
-            { name: 'Maryam Sani', office: 'State Assembly', state: 'Kaduna', constituency: 'Zaria City', votes: 298, date: '2026-05-07', status: 'Disputed', gender: 'Female' },
-            { name: 'Abdullahi Rabiu', office: 'Senate', state: 'Kano', constituency: 'Kano South', votes: 1456, date: '2026-05-04', status: 'Verified', gender: 'Male' }
+            { name: 'Hon. Musa Ibrahim', office: 'Senate', state: 'Kano', constituency: 'Kano Central', votes: 1248, date: '2026-05-07', status: 'Verified' },
+            { name: 'Fatima Bello', office: 'House of Representatives', state: 'Kaduna', constituency: 'Kaduna North', votes: 876, date: '2026-05-06', status: 'Verified' },
+            { name: 'Dr. Chidi Okonkwo', office: 'Governor', state: 'Enugu', constituency: 'Statewide', votes: 2103, date: '2026-05-05', status: 'Verified' },
+            { name: 'Aliyu Sani', office: 'State Assembly', state: 'Borno', constituency: 'Maiduguri Metro', votes: 432, date: '2026-05-07', status: 'Verified' },
+            { name: 'Kashim Ibrahim', office: 'Senate', state: 'Borno', constituency: 'Borno Central', votes: 987, date: '2026-05-04', status: 'Verified' },
+            { name: 'Aisha Bello', office: 'House of Representatives', state: 'Kwara', constituency: 'Ilorin West', votes: 654, date: '2026-05-03', status: 'Pending' },
+            { name: 'Yakubu Mohammed', office: 'Senate', state: 'Katsina', constituency: 'Katsina Central', votes: 1123, date: '2026-05-06', status: 'Verified' },
+            { name: 'Ngozi Adeola', office: 'House of Representatives', state: 'Ogun', constituency: 'Ogun West', votes: 543, date: '2026-05-05', status: 'Disputed' },
+            { name: 'Emeka Nwankwo', office: 'Governor', state: 'Anambra', constituency: 'Statewide', votes: 1876, date: '2026-05-04', status: 'Verified' },
+            { name: 'Zainab Usman', office: 'State Assembly', state: 'Kano', constituency: 'Kano Municipal', votes: 321, date: '2026-05-07', status: 'Verified' },
+            { name: 'Ibrahim Tanko', office: 'Senate', state: 'Plateau', constituency: 'Plateau North', votes: 876, date: '2026-05-03', status: 'Pending' },
+            { name: 'Grace Okonkwo', office: 'House of Representatives', state: 'Delta', constituency: 'Delta Central', votes: 765, date: '2026-05-06', status: 'Verified' },
+            { name: 'Samuel Ortom', office: 'Governor', state: 'Benue', constituency: 'Statewide', votes: 2345, date: '2026-05-05', status: 'Verified' },
+            { name: 'Maryam Sani', office: 'State Assembly', state: 'Kaduna', constituency: 'Zaria City', votes: 298, date: '2026-05-07', status: 'Disputed' },
+            { name: 'Abdullahi Rabiu', office: 'Senate', state: 'Kano', constituency: 'Kano South', votes: 1456, date: '2026-05-04', status: 'Verified' }
         ];
 
+        // Update clock in top nav
+function updateClock() {
+    const clockEl = document.getElementById('liveClock');
+    if (clockEl) {
+        const now = new Date();
+        const options = {
+            timeZone: 'Africa/Lagos',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        };
+        clockEl.textContent = now.toLocaleTimeString('en-NG', options) + ' WAT';
+    }
+
+    // Also update role badge
+    const roleEl = document.getElementById('roleText');
+    if (roleEl && roleEl.textContent === 'Loading...') {
+        const user = JSON.parse(sessionStorage.getItem('sentinel_user') || '{}');
+        if (user.role) {
+            roleEl.textContent = user.role.replace(/_/g, ' ').toUpperCase();
+        }
+    }
+}
+
+// Run immediately and then every second
+updateClock();
+setInterval(updateClock, 1000);
         let currentPage = 1;
-        const rowsPerPage = 8;
+        const rowsPerPage = 10;
         let filteredData = [...candidates];
 
         function renderTable(data) {
@@ -365,25 +457,14 @@
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = pageData.map(c => `
                 <tr>
-                    <td>
-                        <div class="candidate-cell">
-                            <div class="candidate-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <strong>${c.name}</strong>
-                        </div>
-                    </td>
+                    <td><strong>${c.name}</strong></td>
                     <td>${c.office}</td>
                     <td>${c.state}</td>
                     <td>${c.constituency}</td>
                     <td>${c.votes.toLocaleString()}</td>
                     <td>${c.date}</td>
-                    <td><span class="status-badge status-${c.status.toLowerCase()}">${c.status}</span></td>
-                    <td>
-                        <button class="btn" style="background:transparent; border:1px solid var(--accent-green); color:var(--accent-green); padding:0.3rem 0.8rem; border-radius:0.5rem; cursor:pointer;" onclick="viewProfile('${c.name}')">
-                            <i class="fas fa-eye"></i> View
-                        </button>
-                    </td>
+                    <td><span class="status-badge badge-${c.status.toLowerCase()}">${c.status}</span></td>
+                    <td><button class="btn-link" onclick="viewProfile('${c.name}')">View</button></td>
                 </tr>
             `).join('');
 
@@ -394,11 +475,9 @@
             const totalPages = Math.ceil(totalRows / rowsPerPage);
             const pagination = document.getElementById('pagination');
             let html = '';
-            
             for (let i = 1; i <= totalPages; i++) {
                 html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
             }
-            
             pagination.innerHTML = html;
         }
 
@@ -420,7 +499,6 @@
                 const matchState = !stateFilter || c.state === stateFilter;
                 const matchOffice = !officeFilter || c.office === officeFilter;
                 const matchStatus = !statusFilter || c.status === statusFilter;
-                
                 return matchSearch && matchState && matchOffice && matchStatus;
             });
 
@@ -431,14 +509,10 @@
         function sortTable(column) {
             const keys = ['name', 'office', 'state', 'constituency', 'votes', 'date'];
             const key = keys[column];
-            
             filteredData.sort((a, b) => {
-                if (typeof a[key] === 'string') {
-                    return a[key].localeCompare(b[key]);
-                }
+                if (typeof a[key] === 'string') return a[key].localeCompare(b[key]);
                 return a[key] - b[key];
             });
-            
             renderTable(filteredData);
         }
 
@@ -449,12 +523,11 @@
         function exportData() {
             const csv = 'Name,Office,State,Constituency,Votes,Date,Status\n' + 
                 filteredData.map(c => `${c.name},${c.office},${c.state},${c.constituency},${c.votes},${c.date},${c.status}`).join('\n');
-            
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'sentinel_winners_registry.csv';
+            a.download = 'apc_winners_registry_2026.csv';
             a.click();
         }
 
@@ -463,21 +536,47 @@
             window.location.href = 'auth.html';
         }
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             if (!sessionStorage.getItem('sentinel_auth')) {
                 window.location.href = 'auth.html';
                 return;
             }
-            
             renderTable(candidates);
-            
-            // Live clock
             setInterval(() => {
                 document.getElementById('liveClock').textContent = 
-                    new Date().toLocaleTimeString('en-NG', { timeZone: 'Africa/Lagos', hour12: false });
+                    new Date().toLocaleTimeString('en-NG', { timeZone: 'Africa/Lagos', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }) + ' WAT';
             }, 1000);
         });
     </script>
+
+    <script>
+// Quick test for hamburger button
+document.addEventListener('DOMContentLoaded', function() {
+    // Find or create a test button
+    var btn = document.querySelector('.hamburger-btn');
+    if (!btn) {
+        btn = document.createElement('button');
+        btn.className = 'hamburger-btn';
+        btn.innerHTML = '<i class="fas fa-bars"></i>';
+        btn.style.cssText = 'display:flex;position:fixed;top:70px;right:20px;z-index:9999;background:#00a86b;color:#fff;width:44px;height:44px;border-radius:8px;border:none;cursor:pointer;align-items:center;justify-content:center;font-size:20px;';
+        document.body.appendChild(btn);
+    }
+    
+    var sidebar = document.querySelector('.sidebar');
+    
+    btn.onclick = function() {
+        if (sidebar) {
+            sidebar.classList.toggle('mobile-open');
+            if (sidebar.classList.contains('mobile-open')) {
+                sidebar.style.transform = 'translateX(0)';
+                btn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                sidebar.style.transform = 'translateX(-100%)';
+                btn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        }
+    };
+});
+</script>
 </body>
 </html>

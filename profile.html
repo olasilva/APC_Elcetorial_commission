@@ -10,13 +10,15 @@
     <script src="js/mobile-nav.js"></script>
     <style>
         :root {
-            --deep-green: #006647;
-            --gold: #d4af37;
-            --midnight: #020c17;
-            --intel-blue: #0f283f;
-            --text-primary: #e6edf3;
-            --text-secondary: #9bb7d4;
-            --accent-green: #00b87a;
+            --deep-green: #005a3c;
+            --gold: #c4a030;
+            --navy: #0a1628;
+            --dark-panel: #0d1f33;
+            --text-primary: #dde4ed;
+            --text-secondary: #8da0b8;
+            --accent-green: #00a86b;
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --glass-bg: rgba(13, 25, 45, 0.85);
         }
 
         * {
@@ -26,20 +28,23 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--midnight);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(175deg, #070e1a 0%, #0a1628 40%, #0d1a2d 100%);
             color: var(--text-primary);
             min-height: 100vh;
+            letter-spacing: -0.01em;
         }
 
         .top-nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.8rem 2rem;
-            background: rgba(2, 13, 26, 0.95);
-            border-bottom: 1px solid rgba(0, 180, 120, 0.3);
-            backdrop-filter: blur(20px);
+            padding: 0 2rem;
+            height: 64px;
+            background: rgba(10, 20, 35, 0.92);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .nav-brand {
@@ -49,25 +54,31 @@
         }
 
         .apc-emblem {
-            background: linear-gradient(135deg, #0a4b33, #043322);
-            padding: 0.4rem 0.8rem;
-            border-radius: 2rem;
-            border: 1px solid var(--gold);
-            color: #f5e7c6;
-            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 0.3rem;
+            gap: 0.5rem;
+            background: rgba(0, 80, 50, 0.3);
+            padding: 0.35rem 0.9rem;
+            border-radius: 2rem;
+            border: 1px solid rgba(196, 160, 48, 0.35);
+        }
+
+        .apc-emblem img {
+            height: 28px;
+            width: auto;
+            object-fit: contain;
         }
 
         .sentinel-logo {
             font-weight: 700;
-            font-size: 1.4rem;
-            letter-spacing: 2px;
+            font-size: 1.25rem;
+            letter-spacing: 1.5px;
+            color: #c8d6e5;
         }
 
         .sentinel-logo span {
             color: var(--accent-green);
+            font-weight: 600;
         }
 
         .main-layout {
@@ -77,32 +88,54 @@
 
         .sidebar {
             width: 260px;
-            background: rgba(5, 16, 30, 0.9);
-            border-right: 1px solid rgba(0, 180, 120, 0.2);
-            padding: 1.5rem 1rem;
+            background: rgba(8, 18, 30, 0.7);
+            border-right: 1px solid var(--border-subtle);
+            padding: 1.5rem 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .nav-section-title {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #5e7a95;
+            padding: 0.75rem 1rem 0.5rem;
+            font-weight: 600;
         }
 
         .nav-item {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            padding: 0.8rem 1rem;
-            border-radius: 0.8rem;
+            gap: 0.75rem;
+            padding: 0.7rem 1rem;
+            border-radius: 0.6rem;
             color: var(--text-secondary);
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.15s ease;
             font-weight: 500;
             border: none;
             background: transparent;
             width: 100%;
             text-align: left;
-            font-size: 0.9rem;
-            margin-bottom: 0.3rem;
+            font-size: 0.875rem;
+            margin-bottom: 0.15rem;
         }
 
-        .nav-item:hover, .nav-item.active {
-            background: rgba(0, 184, 122, 0.15);
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: #c0d0e0;
+        }
+
+        .nav-item.active {
+            background: rgba(0, 168, 107, 0.12);
             color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .nav-item i {
+            width: 18px;
+            text-align: center;
+            font-size: 0.85rem;
         }
 
         .content-area {
@@ -111,104 +144,242 @@
             overflow-y: auto;
         }
 
+        .breadcrumb {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .breadcrumb span {
+            color: var(--accent-green);
+        }
+
         .profile-header {
-            background: rgba(8, 20, 32, 0.8);
-            border-radius: 1.5rem;
+            background: var(--glass-bg);
+            border-radius: 1rem;
             padding: 2rem;
-            border: 1px solid rgba(0, 180, 120, 0.3);
-            margin-bottom: 2rem;
+            border: 1px solid var(--border-subtle);
+            margin-bottom: 1.5rem;
             display: flex;
             gap: 2rem;
             align-items: center;
         }
 
         .profile-avatar {
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            background: #1e3b51;
-            border: 4px solid var(--gold);
+            background: linear-gradient(135deg, #1a3350, #15273f);
+            border: 2px solid rgba(196, 160, 48, 0.5);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 2.5rem;
+            color: #5e7a95;
+            flex-shrink: 0;
+        }
+
+        .profile-meta h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+            color: #eef2f7;
+        }
+
+        .profile-meta .office-line {
+            color: var(--gold);
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .verification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(0, 168, 107, 0.15);
+            color: #00c97a;
+            padding: 0.3rem 0.9rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            border: 1px solid rgba(0, 168, 107, 0.3);
         }
 
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.25rem;
         }
 
         .info-card {
-            background: rgba(8, 20, 32, 0.8);
-            border-radius: 1.5rem;
+            background: var(--glass-bg);
+            border-radius: 1rem;
             padding: 1.5rem;
-            border: 1px solid rgba(0, 180, 120, 0.2);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .info-card h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #8da0b8;
+            margin-bottom: 1.25rem;
+            font-weight: 600;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
         }
 
         .info-row {
             display: flex;
             justify-content: space-between;
-            padding: 0.7rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 0.9rem;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
         }
 
         .info-label {
             color: var(--text-secondary);
-            font-size: 0.85rem;
+            font-size: 0.82rem;
         }
 
-        .verification-badge {
-            background: rgba(0, 168, 107, 0.2);
-            color: #00e08a;
-            padding: 0.3rem 1rem;
-            border-radius: 1rem;
+        .info-value {
+            font-weight: 500;
+            color: #d0d9e4;
+        }
+
+        .status-winner {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(0, 168, 107, 0.15);
+            color: #00c97a;
+            padding: 0.3rem 0.9rem;
+            border-radius: 2rem;
             font-weight: 600;
-            display: inline-block;
+            font-size: 0.8rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(0, 168, 107, 0.4);
+            color: var(--accent-green);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 168, 107, 0.1);
+            border-color: var(--accent-green);
+        }
+
+        .btn-solid {
+            background: var(--accent-green);
+            border: none;
+            color: #fff;
+            padding: 0.55rem 1.2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-solid:hover {
+            background: #00995e;
+        }
+
+        .clock-display {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+            .nav-item span,
+            .nav-section-title {
+                display: none;
+            }
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <nav class="top-nav">
-        <div class="nav-brand">
-            <div class="apc-emblem">
-    <img src="assets/apc2.png" alt="APC Logo" class="apc-logo-img">
-</div>
-            <div class="sentinel-logo">APC<span>.</span></div>
-        </div>
-        <div style="display:flex; align-items:center; gap:1rem;">
-            <span id="liveClock"></span>
-            <button style="background: var(--accent-green); border:none; padding:0.5rem 1.2rem; border-radius:0.8rem; color:white; font-weight:600; cursor:pointer;" onclick="window.location.href='dashboard.html'">
-                <i class="fas fa-th-large"></i> Dashboard
-            </button>
-        </div>
-    </nav>
+    <!-- Left: Brand -->
+    <div class="nav-brand">
+        <img src="assets/apc2.png" alt="APC" class="nav-logo-img" onerror="this.style.display='none'">
+        <span class="nav-logo-text">APC<span>.</span></span>
+    </div>
+    
+    <!-- Center: Hamburger (mobile only) -->
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Right: Status items -->
+    <div class="nav-status">
+        <span class="nav-pill nav-pill-live">
+            <span class="pulse-dot"></span> Live
+        </span>
+        <span class="nav-pill nav-pill-role" id="roleBadge">
+            <i class="fas fa-shield-alt"></i> Admin
+        </span>
+        <span class="nav-time" id="liveClock">--:--:--</span>
+    </div>
+</nav>
 
     <div class="main-layout">
         <aside class="sidebar">
+            <div class="nav-section-title">Platform</div>
             <button class="nav-item" onclick="window.location.href='dashboard.html'">
-                <i class="fas fa-th-large"></i> Command Center
+                <i class="fas fa-compass"></i> <span>Command Center</span>
             </button>
             <button class="nav-item" onclick="window.location.href='candidates.html'">
-                <i class="fas fa-database"></i> Winner Registry
+                <i class="fas fa-database"></i> <span>Winner Registry</span>
             </button>
             <button class="nav-item" onclick="window.location.href='analytics.html'">
-                <i class="fas fa-chart-pie"></i> Analytics
+                <i class="fas fa-chart-bar"></i> <span>Analytics</span>
             </button>
+            <div class="nav-section-title">Records</div>
             <button class="nav-item active">
-                <i class="fas fa-user"></i> Profiles
+                <i class="fas fa-user"></i> <span>Candidate Profiles</span>
             </button>
             <button class="nav-item" onclick="window.location.href='admin.html'">
-                <i class="fas fa-cog"></i> Admin
+                <i class="fas fa-shield-alt"></i> <span>Administration</span>
             </button>
+            <div class="nav-section-title" style="margin-top:auto;"></div>
             <button class="nav-item" onclick="handleLogout()">
-                <i class="fas fa-sign-out-alt"></i> Logout
+                <i class="fas fa-sign-out-alt"></i> <span>Sign Out</span>
             </button>
         </aside>
 
         <main class="content-area" id="profileContent">
-            <!-- Profile content loaded dynamically -->
+            <!-- Dynamically populated -->
         </main>
     </div>
 
@@ -221,13 +392,14 @@
                 lga: 'Nassarawa',
                 constituency: 'Kano Central',
                 gender: 'Male',
-                occupation: 'Lawyer',
+                occupation: 'Legal Practitioner',
                 votes: 1248,
-                date: 'May 7, 2026',
+                totalDelegates: 2388,
+                date: '7 May 2026',
                 venue: 'APC State Secretariat, Kano',
                 returningOfficer: 'Barr. Ahmad Tijjani',
-                status: 'Emerged Winner',
-                verification: 'Verified'
+                status: 'Winner Declared',
+                verification: 'Fully Verified'
             }
         };
 
@@ -246,66 +418,134 @@
                 lga: 'Nassarawa',
                 constituency: 'Kano Central',
                 gender: 'Male',
-                occupation: 'Lawyer',
+                occupation: 'Legal Practitioner',
                 votes: 1248,
-                date: 'May 7, 2026',
-                venue: 'APC State Secretariat',
+                totalDelegates: 2388,
+                date: '7 May 2026',
+                venue: 'APC State Secretariat, Kano',
                 returningOfficer: 'Barr. Ahmad Tijjani',
-                status: 'Emerged Winner',
-                verification: 'Verified'
+                status: 'Winner Declared',
+                verification: 'Fully Verified'
             };
 
+            const votePercent = ((profile.votes / (profile.totalDelegates || 2388)) * 100).toFixed(1);
+
             document.getElementById('profileContent').innerHTML = `
+                <div class="breadcrumb">
+                    Winner Registry / <span>Candidate Profile</span>
+                </div>
+
                 <div class="profile-header">
                     <div class="profile-avatar">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-user-tie"></i>
                     </div>
-                    <div>
-                        <h1 style="font-size:2rem; margin-bottom:0.5rem;">${profile.name}</h1>
-                        <span class="verification-badge"><i class="fas fa-check-circle"></i> ${profile.verification}</span>
-                        <p style="color: var(--gold); margin-top:0.5rem; font-size:1.1rem;">${profile.office} • ${profile.state}</p>
+                    <div class="profile-meta">
+                        <h1>${profile.name}</h1>
+                        <div class="office-line">${profile.office} · ${profile.state} State</div>
+                        <span class="verification-badge">
+                            <i class="fas fa-check-circle"></i> ${profile.verification}
+                        </span>
                     </div>
                 </div>
 
                 <div class="info-grid">
                     <div class="info-card">
-                        <h3 style="color: var(--gold); margin-bottom:1rem;">📋 Basic Information</h3>
-                        <div class="info-row"><span class="info-label">Full Name</span><span>${profile.name}</span></div>
-                        <div class="info-row"><span class="info-label">Gender</span><span>${profile.gender}</span></div>
-                        <div class="info-row"><span class="info-label">State</span><span>${profile.state}</span></div>
-                        <div class="info-row"><span class="info-label">LGA</span><span>${profile.lga}</span></div>
-                        <div class="info-row"><span class="info-label">Constituency</span><span>${profile.constituency}</span></div>
-                        <div class="info-row"><span class="info-label">Office</span><span>${profile.office}</span></div>
-                        <div class="info-row"><span class="info-label">Occupation</span><span>${profile.occupation}</span></div>
+                        <h3>Biographic Data</h3>
+                        <div class="info-row">
+                            <span class="info-label">Full Name</span>
+                            <span class="info-value">${profile.name}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Gender</span>
+                            <span class="info-value">${profile.gender}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">State of Origin</span>
+                            <span class="info-value">${profile.state}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Local Government Area</span>
+                            <span class="info-value">${profile.lga}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Constituency</span>
+                            <span class="info-value">${profile.constituency}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Office Contested</span>
+                            <span class="info-value">${profile.office}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Occupation</span>
+                            <span class="info-value">${profile.occupation}</span>
+                        </div>
                     </div>
 
                     <div class="info-card">
-                        <h3 style="color: var(--gold); margin-bottom:1rem;">🗳 Election Information</h3>
-                        <div class="info-row"><span class="info-label">Delegate Votes</span><span><strong>${profile.votes.toLocaleString()}</strong></span></div>
-                        <div class="info-row"><span class="info-label">Date Declared</span><span>${profile.date}</span></div>
-                        <div class="info-row"><span class="info-label">Venue</span><span>${profile.venue}</span></div>
-                        <div class="info-row"><span class="info-label">Returning Officer</span><span>${profile.returningOfficer}</span></div>
-                        <div class="info-row"><span class="info-label">Status</span><span class="verification-badge">${profile.status}</span></div>
+                        <h3>Election Results</h3>
+                        <div class="info-row">
+                            <span class="info-label">Delegate Votes Received</span>
+                            <span class="info-value"><strong>${profile.votes.toLocaleString()}</strong></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Total Accredited Delegates</span>
+                            <span class="info-value">${(profile.totalDelegates || 2388).toLocaleString()}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Percentage of Votes</span>
+                            <span class="info-value"><strong>${votePercent}%</strong></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Declaration Date</span>
+                            <span class="info-value">${profile.date}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Venue</span>
+                            <span class="info-value">${profile.venue}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Returning Officer</span>
+                            <span class="info-value">${profile.returningOfficer}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Status</span>
+                            <span class="status-winner"><i class="fas fa-trophy"></i> ${profile.status}</span>
+                        </div>
                     </div>
 
                     <div class="info-card">
-                        <h3 style="color: var(--gold); margin-bottom:1rem;">📄 Documents & Media</h3>
-                        <div style="display:flex; gap:1rem; margin-top:1rem;">
-                            <button style="background:var(--accent-green); border:none; padding:0.5rem 1rem; border-radius:0.5rem; color:white; cursor:pointer;">
-                                <i class="fas fa-file-pdf"></i> Result Sheet
+                        <h3>Supporting Documents</h3>
+                        <div style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:0.5rem;">
+                            <button class="btn-outline">
+                                <i class="fas fa-file-pdf"></i> Result Sheet (EC8B)
                             </button>
-                            <button style="background:var(--accent-green); border:none; padding:0.5rem 1rem; border-radius:0.5rem; color:white; cursor:pointer;">
-                                <i class="fas fa-image"></i> Photos
+                            <button class="btn-outline">
+                                <i class="fas fa-file-pdf"></i> Declaration Form
+                            </button>
+                            <button class="btn-outline">
+                                <i class="fas fa-images"></i> Event Photographs
                             </button>
                         </div>
                     </div>
 
                     <div class="info-card">
-                        <h3 style="color: var(--gold); margin-bottom:1rem;">⚖ Disputes & Appeals</h3>
-                        <div class="info-row"><span class="info-label">Petition Status</span><span>None</span></div>
-                        <div class="info-row"><span class="info-label">Court Action</span><span>None</span></div>
-                        <div class="info-row"><span class="info-label">Appeal Outcome</span><span>N/A</span></div>
-                        <div class="info-row"><span class="info-label">NWC Intervention</span><span>Not Required</span></div>
+                        <h3>Petitions & Disputes</h3>
+                        <div class="info-row">
+                            <span class="info-label">Pre-Election Petition</span>
+                            <span class="info-value">None</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Post-Election Appeal</span>
+                            <span class="info-value">None</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Appeal Committee Decision</span>
+                            <span class="info-value">N/A</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">National Working Committee Review</span>
+                            <span class="info-value">Not Required</span>
+                        </div>
                     </div>
                 </div>
             `;
@@ -321,9 +561,45 @@
             
             setInterval(() => {
                 document.getElementById('liveClock').textContent = 
-                    new Date().toLocaleTimeString('en-NG', { timeZone: 'Africa/Lagos', hour12: false });
+                    new Date().toLocaleTimeString('en-NG', { 
+                        timeZone: 'Africa/Lagos', 
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false 
+                    }) + ' WAT';
             }, 1000);
         });
     </script>
+
+    <script>
+// Quick test for hamburger button
+document.addEventListener('DOMContentLoaded', function() {
+    // Find or create a test button
+    var btn = document.querySelector('.hamburger-btn');
+    if (!btn) {
+        btn = document.createElement('button');
+        btn.className = 'hamburger-btn';
+        btn.innerHTML = '<i class="fas fa-bars"></i>';
+        btn.style.cssText = 'display:flex;position:fixed;top:70px;right:20px;z-index:9999;background:#00a86b;color:#fff;width:44px;height:44px;border-radius:8px;border:none;cursor:pointer;align-items:center;justify-content:center;font-size:20px;';
+        document.body.appendChild(btn);
+    }
+    
+    var sidebar = document.querySelector('.sidebar');
+    
+    btn.onclick = function() {
+        if (sidebar) {
+            sidebar.classList.toggle('mobile-open');
+            if (sidebar.classList.contains('mobile-open')) {
+                sidebar.style.transform = 'translateX(0)';
+                btn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                sidebar.style.transform = 'translateX(-100%)';
+                btn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        }
+    };
+});
+</script>
 </body>
 </html>
